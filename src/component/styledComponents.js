@@ -41,7 +41,14 @@ export const UserInput = styled.input`
 export const Word = styled.span`
   margin-right: 0.5em;
   background-color: ${props => (props.selected ? "rgba(0,0,0,0.1)" : "unset")};
-  color: ${props => (props.errStyle ? "red" : "inherit")};
+  color: ${props => {
+    if(props.errStyle){
+      return 'red'
+    }
+    if(props.isCorrect){
+      return 'green'
+    }
+  }};
 `;
 
 export const Char = styled.span`

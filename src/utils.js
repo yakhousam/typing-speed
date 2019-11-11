@@ -32,7 +32,7 @@ export const formatDisplayTxt = state => {
   }
   if (cursor === 1) {
     return [
-      <Word errStyle={errorArr.includes(0)} key={0}>
+      <Word errStyle={errorArr.includes(0)} isCorrect={!errorArr.includes(0)} key={0}>
         {state.textArr[0]}
       </Word>,
       currentWord,
@@ -41,7 +41,7 @@ export const formatDisplayTxt = state => {
   }
   return [
     ...state.displayText.slice(0, cursor - 1),
-    <Word errStyle={errorArr.includes(cursor - 1)} key={cursor - 1}>
+    <Word errStyle={errorArr.includes(cursor - 1)} isCorrect={!errorArr.includes(0)} key={cursor - 1}>
       {state.textArr[cursor - 1]}
     </Word>,
     currentWord,
