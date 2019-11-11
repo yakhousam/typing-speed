@@ -1,5 +1,5 @@
 import React from "react";
-import { Word } from "./styledComponents";
+import { Word, Char } from "./component/styledComponents";
 
 export const checkInput = (input = "", str = "") => {
   if (input.trim() !== str.slice(0, input.length)) {
@@ -21,10 +21,8 @@ export const formatDisplayTxt = state => {
   } else {
     currentWord = (
       <Word errStyle={errorArr.includes(cursor)} selected key={cursor}>
-        {textArr[cursor].slice(0, input.length - 1)}{" "}
-        <span style={{ fontWeight: "bold", margin: "-.5em" }}>
-          {textArr[cursor].charAt(input.length - 1)}
-        </span>{" "}
+        {textArr[cursor].slice(0, input.length - 1)}
+        <Char>{textArr[cursor].charAt(input.length - 1)}</Char>
         {textArr[cursor].slice(input.length)}
       </Word>
     );
