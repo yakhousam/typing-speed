@@ -7,5 +7,7 @@ export const initState = {
   textArr: txt.split(/\s+/),
   input: "",
   errorArr: [],
-  cursor: 0
+  cursor: 0,
+  timer: 10,
+  start: false
 };

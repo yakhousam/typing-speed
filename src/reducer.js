@@ -4,12 +4,15 @@ import {
   INC_CURSOR,
   ADD_ERROR,
   REMOVE_ERROR,
-  RELOAD
+  RELOAD,
+  DEC_TIMER,
+  START
 } from "./actions";
-import { formatDisplayTxt, formatTxt } from "./utils";
+import { formatDisplayTxt } from "./utils";
+import {initState} from './state'
 
 const reducer = (state, action) => {
-  console.log(action.type, state.cursor);
+  console.log(action);
   switch (action.type) {
     case SET_INPUT:
       return { ...state, input: action.input };
@@ -31,7 +34,11 @@ const reducer = (state, action) => {
     case INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
     case RELOAD:
-      return {...state, errorArr:[], cursor:0, displayText: formatTxt(state.textArr.join(' '))}
+      return {...initState}
+    case DEC_TIMER:
+      return {...state, timer: state.timer - 1}
+    case START:
+      return {...state, start: action.start}
 
     default:
       return state;
