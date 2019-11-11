@@ -56,7 +56,7 @@ export const formatDisplayTxt = state => {
     ...state.displayText.slice(0, cursor - 1),
     <Word
       errStyle={errorArr.includes(cursor - 1)}
-      isCorrect={!errorArr.includes(0)}
+      isCorrect={!errorArr.includes(cursor - 1)}
       key={cursor - 1}
     >
       {state.textArr[cursor - 1]}

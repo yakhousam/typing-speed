@@ -85,7 +85,7 @@ const MainPage = () => {
       {timer < 1 && (
         <Section>
           <div>
-            WPM: {errorArr.length ? cursor - errorArr.length + 1 : 0}
+            WPM: {errorArr.length ? cursor - errorArr.length + 1 : cursor}
           </div>
           <div>
             ERR: {errorArr.length}
