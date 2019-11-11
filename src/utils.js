@@ -8,6 +8,9 @@ export const checkInput = (input = "", str = "") => {
   return true;
 };
 
+export const formatTxt = txt =>
+  txt.split(/\s+/).map((word, i) => <Word key={i}>{word}</Word>);
+
 export const formatDisplayTxt = state => {
   const { cursor, errorArr, input, textArr } = state;
   if (cursor > textArr.length) return state.displayText;
@@ -21,8 +24,14 @@ export const formatDisplayTxt = state => {
   } else {
     currentWord = (
       <Word errStyle={errorArr.includes(cursor)} selected key={cursor}>
-        {textArr[cursor].slice(0, input.length - 1)}
-        <Char>{textArr[cursor].charAt(input.length - 1)}</Char>
+        <span
+          style={{ color: !errorArr.includes(cursor) ? "green" : "inherit" }}
+        >
+          {textArr[cursor].slice(0, input.length - 1)}
+        </span>
+        <Char errStyle={errorArr.includes(cursor)}>
+          {textArr[cursor].charAt(input.length - 1)}
+        </Char>
         {textArr[cursor].slice(input.length)}
       </Word>
     );
@@ -32,7 +41,11 @@ export const formatDisplayTxt = state => {
   }
   if (cursor === 1) {
     return [
-      <Word errStyle={errorArr.includes(0)} isCorrect={!errorArr.includes(0)} key={0}>
+      <Word
+        errStyle={errorArr.includes(0)}
+        isCorrect={!errorArr.includes(0)}
+        key={0}
+      >
         {state.textArr[0]}
       </Word>,
       currentWord,
@@ -41,7 +54,11 @@ export const formatDisplayTxt = state => {
   }
   return [
     ...state.displayText.slice(0, cursor - 1),
-    <Word errStyle={errorArr.includes(cursor - 1)} isCorrect={!errorArr.includes(0)} key={cursor - 1}>
+    <Word
+      errStyle={errorArr.includes(cursor - 1)}
+      isCorrect={!errorArr.includes(0)}
+      key={cursor - 1}
+    >
       {state.textArr[cursor - 1]}
     </Word>,
     currentWord,

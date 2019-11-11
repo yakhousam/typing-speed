@@ -1,7 +1,7 @@
 import React from "react";
-import { Section, UserInput, TextBox, Main } from "./styledComponents";
+import { Section, UserInput, TextBox, Main, ButtonReload } from "./styledComponents";
 
-import { setInput, incrementCursor, addError, removeError } from "../actions";
+import { setInput, incrementCursor, addError, removeError, reload } from "../actions";
 import { checkInput } from "../utils";
 
 const MainPage = ({ state, dispatch }) => {
@@ -31,6 +31,10 @@ const MainPage = ({ state, dispatch }) => {
       </Section>
       <Section>
         <UserInput type="text" value={input} onChange={handleChange} />
+        <ButtonReload onClick={() => {
+          reload(dispatch)
+        }
+        }>Reload</ButtonReload>
       </Section>
     </Main>
   );

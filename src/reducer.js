@@ -3,9 +3,10 @@ import {
   UPDATE_DISPLAY_TXT,
   INC_CURSOR,
   ADD_ERROR,
-  REMOVE_ERROR
+  REMOVE_ERROR,
+  RELOAD
 } from "./actions";
-import { formatDisplayTxt } from "./utils";
+import { formatDisplayTxt, formatTxt } from "./utils";
 
 const reducer = (state, action) => {
   console.log(action.type, state.cursor);
@@ -29,6 +30,8 @@ const reducer = (state, action) => {
       };
     case INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
+    case RELOAD:
+      return {...state, errorArr:[], cursor:0, displayText: formatTxt(state.textArr.join(' '))}
 
     default:
       return state;

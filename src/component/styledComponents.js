@@ -26,7 +26,7 @@ export const Section = styled.section`
   border: solid thin black;
   padding: 20px;
   margin: 30px 0;
-`
+`;
 
 export const TextBox = styled.div`
   font-size: 36px;
@@ -42,15 +42,26 @@ export const Word = styled.span`
   margin-right: 0.5em;
   background-color: ${props => (props.selected ? "rgba(0,0,0,0.1)" : "unset")};
   color: ${props => {
-    if(props.errStyle){
-      return 'red'
+    if (props.errStyle) {
+      return "red";
     }
-    if(props.isCorrect){
-      return 'green'
+    if (props.isCorrect) {
+      return "green";
     }
+    return "inherit";
   }};
 `;
 
 export const Char = styled.span`
   font-weight: bold;
+  color: ${props => {
+    if (props.errStyle) {
+      return "red";
+    }else{
+      return "green";
+    }
+  }};
 `;
+export const ButtonReload = styled.button`
+
+`

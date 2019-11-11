@@ -1,8 +1,6 @@
-import React from "react";
-import { Word } from "./component/styledComponents";
+import {formatTxt} from './utils'
+
 const txt = "I'm unstoppable, I'm a Porsche with no brakes";
-const formatTxt = txt =>
-  txt.split(/\s+/).map((word, i) => <Word key={i}>{word}</Word>);
 
 export const initState = {
   displayText: formatTxt(txt),
