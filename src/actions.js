@@ -6,6 +6,8 @@ export const REMOVE_ERROR = "REMOVE_ERROR";
 export const RELOAD = "RELOAD";
 export const START_TIMER = "START_TIMER";
 export const DEC_TIMER = "DEC_TIMER";
+export const GAME_OVER = "GAME_OVER";
+
 
 export const setInput = (input, dispatch) => {
   dispatch({ type: SET_INPUT, input });
@@ -31,4 +33,7 @@ export const startTimer = (start, dispatch) => {
 
 export const decTimer = dispatch => {
   dispatch({ type: DEC_TIMER });
+};
+export const gameOver = dispatch => {
+  dispatch({ type: GAME_OVER });
 };

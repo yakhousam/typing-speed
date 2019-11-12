@@ -15,7 +15,8 @@ import {
   reload,
   updateDisplayTxt,
   decTimer,
-  startTimer
+  startTimer,
+  gameOver
 } from "../actions";
 import { checkInput } from "../utils";
 import { initState } from "../state";
@@ -60,7 +61,7 @@ const MainPage = () => {
       return () => clearInterval(interval);
     }
     if (timer < 1) {
-      startTimer(false, dispatch);
+      gameOver(dispatch);
     }
   }, [timer, isTimerStarted]);
 

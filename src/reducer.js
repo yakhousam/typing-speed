@@ -40,6 +40,8 @@ const reducer = (state, action) => {
       return {...state, timer: state.timer - 1}
     case START_TIMER:
       return {...state, isTimerStarted: true}
+    case GAME_OVER:
+      return {...state, isTimerStarted: false, input:'', displayText:[...state.displayText.slice(0, state.cursor), ...initState.displayText.slice(state.cursor)]}
 
     default:
       return state;
