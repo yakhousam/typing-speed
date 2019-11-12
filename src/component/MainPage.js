@@ -89,7 +89,10 @@ const MainPage = () => {
             WPM: {score}
           </div>
           <div>
-            ERR: {errorArr.length}
+            Accuracy: {(100 - ((errorArr.length * 100)/(errorArr.length + score))) || 0}
+          </div>
+          <div>
+            ERR: {errorArr.length }
           </div>
         </Section>
       )}
