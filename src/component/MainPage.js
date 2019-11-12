@@ -60,7 +60,7 @@ const MainPage = () => {
       }, 1000);
       return () => clearInterval(interval);
     }
-    if (timer < 1) {
+    if (timer < 1 && isTimerStarted) {
       gameOver(dispatch);
     }
   }, [timer, isTimerStarted]);
