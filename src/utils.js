@@ -11,6 +11,23 @@ export const checkInput = (input = "", str = "") => {
 export const formatTxt = txt =>
   txt.split(/\s+/).map((word, i) => <Word key={i}>{word}</Word>);
 
+export const calcAccuracy = ({score, errorArr}) => (
+  (100 - ((errorArr.length * 100)/(errorArr.length + score))) || 0
+)
+
+
+export const saveResultLocalStorage = ({score, errorArr}) => {
+  const tapinSpeedData = window.localStorage.getItem('tapinSpeedData') ? JSON.parse(window.localStorage.getItem('tapinSpeedData')) : []
+  tapinSpeedData.push({
+    accuracy: calcAccuracy({score, errorArr}),
+    date: new Date(),
+    score
+  })
+  console.log({tapinSpeedData})
+  window.localStorage.setItem('tapinSpeedData', JSON.stringify(tapinSpeedData))
+}
+
+
 export const formatDisplayTxt = state => {
   const { cursor, errorArr, input, textArr } = state;
   if (cursor > textArr.length) return state.displayText;

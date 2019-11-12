@@ -18,17 +18,25 @@ import {
   startTimer,
   gameOver
 } from "../actions";
-import { checkInput } from "../utils";
+import { checkInput, calcAccuracy, saveResultLocalStorage } from "../utils";
 import { initState } from "../state";
 import reducer from "../reducer";
 
 const MainPage = () => {
   const [state, dispatch] = useReducer(reducer, initState);
-  const { input, cursor, displayText, textArr, errorArr, timer, isTimerStarted, score } = state;
+  const {
+    input,
+    cursor,
+    displayText,
+    textArr,
+    errorArr,
+    timer,
+    isTimerStarted,
+    score
+  } = state;
   const handleChange = e => {
-    if(timer < 1 || cursor > textArr.length -1){
-      // setInput("", dispatch)
-      return
+    if (timer < 1 || cursor > textArr.length - 1) {
+      return;
     }
     if (!isTimerStarted && timer > 0) {
       startTimer(true, dispatch);
@@ -65,13 +73,23 @@ const MainPage = () => {
     }
   }, [timer, isTimerStarted]);
 
+  useEffect(() => {
+    if(timer < 1 && score > 0)
+    saveResultLocalStorage({ score, errorArr });
+  },[score, errorArr, timer]);
+
   return (
     <Main>
       <Section>
         <TextBox>{displayText}</TextBox>
       </Section>
       <Section>
-        <UserInput type="text" autoFocus value={input} onChange={handleChange} />
+        <UserInput
+          type="text"
+          autoFocus
+          value={input}
+          onChange={handleChange}
+        />
         {timer < 1 && (
           <ButtonReload
             onClick={() => {
@@ -85,15 +103,9 @@ const MainPage = () => {
       </Section>
       {timer < 1 && (
         <Section>
-          <div>
-            WPM: {score}
-          </div>
-          <div>
-            Accuracy: {(100 - ((errorArr.length * 100)/(errorArr.length + score))) || 0}
-          </div>
-          <div>
-            ERR: {errorArr.length }
-          </div>
+          <div>WPM: {score}</div>
+          <div>Accuracy: {calcAccuracy({ score, errorArr })}</div>
+          <div>ERR: {errorArr.length}</div>
         </Section>
       )}
     </Main>
