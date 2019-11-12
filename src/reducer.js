@@ -44,6 +44,7 @@ const reducer = (state, action) => {
     case START_TIMER:
       return { ...state, isTimerStarted: true };
     case GAME_OVER:
+      const x = state.displayText.slice(0, state.cursor).length - state.errorArr.length;
       return {
         ...state,
         isTimerStarted: false,
@@ -52,7 +53,8 @@ const reducer = (state, action) => {
           ...state.displayText.slice(0, state.cursor),
           ...initState.displayText.slice(state.cursor)
         ],
-        score: state.displayText.slice(0, state.cursor).length - state.errorArr.length
+        score: x > 0 ? x : 0,
+        errorArr: state.errorArr[state.errorArr.length -1] === state.cursor ? state.errorArr.slice(0, -1) : state.errorArr
       };
 
     default:
