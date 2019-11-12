@@ -24,10 +24,10 @@ import reducer from "../reducer";
 
 const MainPage = () => {
   const [state, dispatch] = useReducer(reducer, initState);
-  const { input, cursor, displayText, textArr, errorArr, timer, isTimerStarted } = state;
+  const { input, cursor, displayText, textArr, errorArr, timer, isTimerStarted, score } = state;
   const handleChange = e => {
-    if(timer < 1){
-      setInput("", dispatch)
+    if(timer < 1 || cursor > textArr.length -1){
+      // setInput("", dispatch)
       return
     }
     if (!isTimerStarted && timer > 0) {
@@ -86,7 +86,7 @@ const MainPage = () => {
       {timer < 1 && (
         <Section>
           <div>
-            WPM: {errorArr.length ? cursor - errorArr.length + 1 : cursor}
+            WPM: {score}
           </div>
           <div>
             ERR: {errorArr.length}

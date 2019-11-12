@@ -9,5 +9,6 @@ export const initState = {
   errorArr: [],
   cursor: 0,
   timer: 10,
-  isTimerStarted: false
+  isTimerStarted: false,
+  score: 0
 };

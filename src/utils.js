@@ -52,16 +52,29 @@ export const formatDisplayTxt = state => {
       ...state.displayText.slice(2)
     ];
   }
-  return [
-    ...state.displayText.slice(0, cursor - 1),
-    <Word
-      errStyle={errorArr.includes(cursor - 1)}
-      isCorrect={!errorArr.includes(cursor - 1)}
-      key={cursor - 1}
-    >
-      {state.textArr[cursor - 1]}
-    </Word>,
-    currentWord,
-    ...state.displayText.slice(cursor + 1)
-  ];
+  if (cursor < textArr.length) {
+    return [
+      ...state.displayText.slice(0, cursor - 1),
+      <Word
+        errStyle={errorArr.includes(cursor - 1)}
+        isCorrect={!errorArr.includes(cursor - 1)}
+        key={cursor - 1}
+      >
+        {state.textArr[cursor - 1]}
+      </Word>,
+      currentWord,
+      ...state.displayText.slice(cursor + 1)
+    ];
+  } else {
+    return [
+      ...state.displayText.slice(0, cursor - 1),
+      <Word
+        errStyle={errorArr.includes(cursor - 1)}
+        isCorrect={!errorArr.includes(cursor - 1)}
+        key={cursor - 1}
+      >
+        {state.textArr[cursor - 1]}
+      </Word>
+    ];
+  }
 };

@@ -10,10 +10,13 @@ import {
   GAME_OVER
 } from "./actions";
 import { formatDisplayTxt } from "./utils";
-import {initState} from './state'
+import { initState } from "./state";
 
 const reducer = (state, action) => {
-  console.log(action);
+  if(action.type === GAME_OVER){
+    console.log(state);
+  }
+  console.log(action.type)
   switch (action.type) {
     case SET_INPUT:
       return { ...state, input: action.input };
@@ -35,13 +38,22 @@ const reducer = (state, action) => {
     case INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
     case RELOAD:
-      return {...initState}
+      return { ...initState };
     case DEC_TIMER:
-      return {...state, timer: state.timer - 1}
+      return { ...state, timer: state.timer - 1 };
     case START_TIMER:
-      return {...state, isTimerStarted: true}
+      return { ...state, isTimerStarted: true };
     case GAME_OVER:
-      return {...state, isTimerStarted: false, input:'', displayText:[...state.displayText.slice(0, state.cursor), ...initState.displayText.slice(state.cursor)]}
+      return {
+        ...state,
+        isTimerStarted: false,
+        input: "",
+        displayText: [
+          ...state.displayText.slice(0, state.cursor),
+          ...initState.displayText.slice(state.cursor)
+        ],
+        score: state.displayText.slice(0, state.cursor).length - state.errorArr.length
+      };
 
     default:
       return state;
