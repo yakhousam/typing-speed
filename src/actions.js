@@ -4,7 +4,7 @@ export const INC_CURSOR = "INC_CURSOR";
 export const ADD_ERROR = "ADD_ERROR";
 export const REMOVE_ERROR = "REMOVE_ERROR";
 export const RELOAD = "RELOAD";
-export const START = "START";
+export const START_TIMER = "START_TIMER";
 export const DEC_TIMER = "DEC_TIMER";
 
 export const setInput = (input, dispatch) => {
@@ -26,7 +26,7 @@ export const reload = dispatch => {
   dispatch({ type: RELOAD });
 };
 export const startTimer = (start, dispatch) => {
-  dispatch({ type: START, start });
+  dispatch({ type: START_TIMER, start });
 };
 
 export const decTimer = dispatch => {

@@ -6,7 +6,8 @@ import {
   REMOVE_ERROR,
   RELOAD,
   DEC_TIMER,
-  START
+  START_TIMER,
+  GAME_OVER
 } from "./actions";
 import { formatDisplayTxt } from "./utils";
 import {initState} from './state'
@@ -37,8 +38,8 @@ const reducer = (state, action) => {
       return {...initState}
     case DEC_TIMER:
       return {...state, timer: state.timer - 1}
-    case START:
-      return {...state, start: action.start}
+    case START_TIMER:
+      return {...state, isTimerStarted: true}
 
     default:
       return state;

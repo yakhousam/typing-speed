@@ -23,13 +23,13 @@ import reducer from "../reducer";
 
 const MainPage = () => {
   const [state, dispatch] = useReducer(reducer, initState);
-  const { input, cursor, displayText, textArr, errorArr, timer, start } = state;
+  const { input, cursor, displayText, textArr, errorArr, timer, isTimerStarted } = state;
   const handleChange = e => {
     if(timer < 1){
       setInput("", dispatch)
       return
     }
-    if (!start && timer > 0) {
+    if (!isTimerStarted && timer > 0) {
       startTimer(true, dispatch);
     }
     let input = e.target.value;
@@ -53,7 +53,7 @@ const MainPage = () => {
   }, [cursor, errorArr, input]);
 
   useEffect(() => {
-    if (timer > 0 && start) {
+    if (timer > 0 && isTimerStarted) {
       const interval = setInterval(() => {
         decTimer(dispatch);
       }, 1000);
@@ -62,7 +62,7 @@ const MainPage = () => {
     if (timer < 1) {
       startTimer(false, dispatch);
     }
-  }, [timer, start]);
+  }, [timer, isTimerStarted]);
 
   return (
     <Main>
@@ -70,7 +70,7 @@ const MainPage = () => {
         <TextBox>{displayText}</TextBox>
       </Section>
       <Section>
-        <UserInput type="text" value={input} onChange={handleChange} />
+        <UserInput type="text" autoFocus value={input} onChange={handleChange} />
         {timer < 1 && (
           <ButtonReload
             onClick={() => {
