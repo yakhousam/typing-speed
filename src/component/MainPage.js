@@ -58,8 +58,10 @@ const MainPage = () => {
     setInput(input, dispatch);
   };
   useEffect(() => {
-    updateDisplayTxt(dispatch);
-  }, [cursor, errorArr, input]);
+    if(timer > 0){
+      updateDisplayTxt(dispatch);
+    }
+  }, [cursor, errorArr, input, timer]);
 
   useEffect(() => {
     if (timer > 0 && isTimerStarted) {
