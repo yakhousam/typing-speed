@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from "react";
 import { Section } from "./styledComponents";
 import * as d3 from "d3";
 
-const Chart = ({ data }) => {
+const Chart = ({ data, title }) => {
   const svgRef = useRef();
   useEffect(() => {
     d3.select(svgRef.current).select('svg').remove()
-    const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    const margin = { top: 20, right: 30, bottom: 30, left: 60 },
       width = 860 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
@@ -61,7 +61,16 @@ const Chart = ({ data }) => {
             return y(d.value);
           })
       );
-  }, [data]);
+      svg.append("text")
+      .attr("x",  (- height / 2))             
+      .attr("y",  -30)
+      .attr('transform', 'rotate(-90)') 
+      .style("font-size", "16px")
+      .style('text-anchor', 'middle') 
+      .text(title);
+
+
+  }, [data, title]);
 
   return <Section ref={svgRef} />;
 };
