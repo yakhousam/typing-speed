@@ -115,9 +115,9 @@ const MainPage = () => {
         )}
         {timer > 0 && <Timer>{timer}</Timer>}
       </Section>
+      {dataChart.length > 0 && <Chart title= "WPM" data={dataChart.map(d =>({date: d.date, value: d.score}))} />}
+      {dataChart.length > 0 && <Chart title= "Accuracy" data={dataChart.map(d =>({date: d.date, value: d.accuracy}))} />}
       
-      <Chart title= "WPM" data={dataChart.map(d =>({date: d.date, value: d.score}))} />
-      <Chart title= "Accuracy" data={dataChart.map(d =>({date: d.date, value: d.accuracy}))} />
     </Main>
   );
 };
