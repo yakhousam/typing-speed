@@ -39,13 +39,13 @@ const reducer = (state, action) => {
     case INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
     case RELOAD:
-      return { ...initState };
+      return { ...initState, dataChart: [...state.dataChart] };
     case DEC_TIMER:
       return { ...state, timer: state.timer - 1 };
     case START_TIMER:
       return { ...state, isTimerStarted: true };
     case GAME_OVER:
-      const x = state.cursor - state.errorArr.length;
+      const x = state.cursor - state.errorArr.filter(el => el !== state.cursor).length
       return {
         ...state,
         isTimerStarted: false,
@@ -55,10 +55,7 @@ const reducer = (state, action) => {
           ...initState.displayText.slice(state.cursor)
         ],
         score: x > 0 ? x : 0,
-        errorArr:
-          state.errorArr[state.errorArr.length - 1] === state.cursor
-            ? state.errorArr.slice(0, -1)
-            : state.errorArr
+        errorArr: state.errorArr.filter(el => el !== state.cursor)
       };
     case UPDATE_DATA_CHART:
       return{...state, dataChart: [...state.dataChart, action.data]}

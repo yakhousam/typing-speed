@@ -80,6 +80,7 @@ const MainPage = () => {
   useEffect(() => {
     if(timer < 1 && score > 0){
     const data = saveResultLocalStorage({ score, errorArr });
+    console.log("data =", data)
     updateDataChart(data, dispatch)
     }
   },[score, errorArr, timer]);
@@ -114,6 +115,16 @@ const MainPage = () => {
           <div>ERR: {errorArr.length}</div>
         </Section>
       )}
+       <Section>
+        {dataChart.map((el, i) => (
+          <ul key={i}>
+            <li>date: {new Date(el.date).toLocaleString()}</li>
+            <li>WPM: {el.score}</li>
+            <li>Accuracy: {el.accuracy}</li>
+          </ul>
+        )
+        )}
+      </Section>
     </Main>
   );
 };

@@ -20,7 +20,7 @@ export const saveResultLocalStorage = ({score, errorArr}) => {
   const tapingSpeedData = window.localStorage.getItem('tapingSpeedData') ? JSON.parse(window.localStorage.getItem('tapingSpeedData')) : []
   const data = {
     accuracy: calcAccuracy({score, errorArr}),
-    date: new Date(),
+    date: Date.now(),
     score
   }
   tapingSpeedData.push(data)
