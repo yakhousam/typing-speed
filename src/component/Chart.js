@@ -6,7 +6,7 @@ const Chart = ({ data }) => {
   useEffect(() => {
     d3.selectAll("svg").remove();
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 460 - margin.left - margin.right,
+    width = 860 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 
@@ -29,7 +29,7 @@ const Chart = ({ data }) => {
     
         // Add Y axis
         var y = d3.scaleLinear()
-          .domain([0, d3.max(data, function(d) { return +d.score; })])
+          .domain([0, d3.max([...data, {score: 100}], function(d) { return +d.score; })])
           .range([ height, 0 ]);
         svg.append("g")
           .call(d3.axisLeft(y));
@@ -44,6 +44,15 @@ const Chart = ({ data }) => {
             .x(function(d) { return x(d.date) })
             .y(function(d) { return y(d.score) })
             )
+        svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "orange")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+          .x(function(d) { return x(d.date) })
+          .y(function(d) { return y(d.accuracy) })
+          )
     
   }, [data]);
 
