@@ -89,6 +89,11 @@ const MainPage = () => {
 
   return (
     <Main>
+      <Section flexDirection='column'>
+          <div>WPM: {score}</div>
+          <div>Accuracy: {calcAccuracy({ score, errorArr })}</div>
+          <div>ERR: {errorArr.length}</div>
+        </Section>
       <Section>
         <TextBox>{displayText}</TextBox>
       </Section>
@@ -110,14 +115,9 @@ const MainPage = () => {
         )}
         {timer > 0 && <Timer>{timer}</Timer>}
       </Section>
-      {timer < 1 && (
-        <Section flexDirection='column'>
-          <div>WPM: {score}</div>
-          <div>Accuracy: {calcAccuracy({ score, errorArr })}</div>
-          <div>ERR: {errorArr.length}</div>
-        </Section>
-      )}
-      <Chart data={dataChart} />
+      
+      <Chart title= "WPM" data={dataChart.map(d =>({date: d.date, value: d.score}))} />
+      <Chart title= "Accuracy" data={dataChart.map(d =>({date: d.date, value: d.accuracy}))} />
     </Main>
   );
 };
