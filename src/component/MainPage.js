@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import Chart from './Chart'
 import {
   Section,
   UserInput,
@@ -115,16 +116,7 @@ const MainPage = () => {
           <div>ERR: {errorArr.length}</div>
         </Section>
       )}
-       <Section>
-        {dataChart.map((el, i) => (
-          <ul key={i}>
-            <li>date: {new Date(el.date).toLocaleString()}</li>
-            <li>WPM: {el.score}</li>
-            <li>Accuracy: {el.accuracy}</li>
-          </ul>
-        )
-        )}
-      </Section>
+      <Chart data={dataChart} />
     </Main>
   );
 };
