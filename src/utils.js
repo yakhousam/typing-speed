@@ -11,9 +11,10 @@ export const checkInput = (input = "", str = "") => {
 export const formatTxt = txt =>
   txt.split(/\s+/).map((word, i) => <Word key={i}>{word}</Word>);
 
-export const calcAccuracy = ({score, errorArr}) => (
-  (100 - ((errorArr.length * 100)/(errorArr.length + score))) || 0
-)
+export const calcAccuracy = ({score, errorArr}) => {
+  const calc = (100 - ((errorArr.length * 100)/(errorArr.length + score)))
+  return calc ? calc.toFixed(2) : 0
+}
 
 
 export const saveResultLocalStorage = ({score, errorArr}) => {
