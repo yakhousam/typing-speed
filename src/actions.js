@@ -7,6 +7,7 @@ export const RELOAD = "RELOAD";
 export const START_TIMER = "START_TIMER";
 export const DEC_TIMER = "DEC_TIMER";
 export const GAME_OVER = "GAME_OVER";
+export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART"
 
 
 export const setInput = (input, dispatch) => {
@@ -37,3 +38,7 @@ export const decTimer = dispatch => {
 export const gameOver = dispatch => {
   dispatch({ type: GAME_OVER });
 };
+export const updateDataChart = (data, dispatch) => {
+  dispatch({type: UPDATE_DATA_CHART, data})
+}
+

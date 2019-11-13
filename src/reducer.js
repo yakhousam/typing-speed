@@ -7,7 +7,8 @@ import {
   RELOAD,
   DEC_TIMER,
   START_TIMER,
-  GAME_OVER
+  GAME_OVER,
+  UPDATE_DATA_CHART
 } from "./actions";
 import { formatDisplayTxt } from "./utils";
 import { initState } from "./state";
@@ -59,6 +60,8 @@ const reducer = (state, action) => {
             ? state.errorArr.slice(0, -1)
             : state.errorArr
       };
+    case UPDATE_DATA_CHART:
+      return{...state, dataChart: [...state.dataChart, action.data]}
 
     default:
       return state;

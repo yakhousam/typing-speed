@@ -16,7 +16,8 @@ import {
   updateDisplayTxt,
   decTimer,
   startTimer,
-  gameOver
+  gameOver,
+  updateDataChart
 } from "../actions";
 import { checkInput, calcAccuracy, saveResultLocalStorage } from "../utils";
 import { initState } from "../state";
@@ -32,7 +33,8 @@ const MainPage = () => {
     errorArr,
     timer,
     isTimerStarted,
-    score
+    score,
+    dataChart
   } = state;
   const handleChange = e => {
     if (timer < 1 || cursor > textArr.length - 1) {
@@ -76,8 +78,10 @@ const MainPage = () => {
   }, [timer, isTimerStarted]);
 
   useEffect(() => {
-    if(timer < 1 && score > 0)
-    saveResultLocalStorage({ score, errorArr });
+    if(timer < 1 && score > 0){
+    const data = saveResultLocalStorage({ score, errorArr });
+    updateDataChart(data, dispatch)
+    }
   },[score, errorArr, timer]);
 
   return (

@@ -1,4 +1,4 @@
-import {formatTxt} from './utils'
+import {formatTxt, getDataLocalSorage} from './utils'
 
 const txt = "I'm unstoppable, I'm a Porsche with no brakes";
 
@@ -10,5 +10,6 @@ export const initState = {
   cursor: 0,
   timer: 10,
   isTimerStarted: false,
-  score: 0
+  score: 0,
+  dataChart: getDataLocalSorage()
 };

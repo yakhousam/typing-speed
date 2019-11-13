@@ -17,15 +17,24 @@ export const calcAccuracy = ({score, errorArr}) => (
 
 
 export const saveResultLocalStorage = ({score, errorArr}) => {
-  const tapinSpeedData = window.localStorage.getItem('tapinSpeedData') ? JSON.parse(window.localStorage.getItem('tapinSpeedData')) : []
-  tapinSpeedData.push({
+  const tapingSpeedData = window.localStorage.getItem('tapingSpeedData') ? JSON.parse(window.localStorage.getItem('tapingSpeedData')) : []
+  const data = {
     accuracy: calcAccuracy({score, errorArr}),
     date: new Date(),
     score
-  })
-  console.log({tapinSpeedData})
-  window.localStorage.setItem('tapinSpeedData', JSON.stringify(tapinSpeedData))
+  }
+  tapingSpeedData.push(data)
+  console.log({tapingSpeedData})
+  window.localStorage.setItem('tapingSpeedData', JSON.stringify(tapingSpeedData))
+  return data;
 }
+
+export const getDataLocalSorage = () => {
+  const tapingSpeedData = window.localStorage.getItem('tapingSpeedData') ? JSON.parse(window.localStorage.getItem('tapingSpeedData')) : []
+return tapingSpeedData
+  
+}
+
 
 
 export const formatDisplayTxt = state => {
