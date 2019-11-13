@@ -11,7 +11,7 @@ import {
   UPDATE_DATA_CHART
 } from "./actions";
 import { formatDisplayTxt } from "./utils";
-import { initState } from "./state";
+import { initState } from "./store";
 
 const reducer = (state, action) => {
   if (action.type === GAME_OVER) {

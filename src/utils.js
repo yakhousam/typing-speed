@@ -12,7 +12,7 @@ export const formatTxt = txt =>
   txt.split(/\s+/).map((word, i) => <Word key={i}>{word}</Word>);
 
 export const calcAccuracy = ({score, errorArr}) => (
-  (100 - ((errorArr.length * 100)/(errorArr.length + score))) || 0
+  (100 - ((errorArr.length * 100)/(errorArr.length + score))).toFixed(2) || 0
 )
 
 

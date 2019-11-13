@@ -5,7 +5,8 @@ import {
   UserInput,
   TextBox,
   Main,
-  ButtonReload
+  ButtonReload,
+  Timer
 } from "./styledComponents";
 
 import {
@@ -21,7 +22,7 @@ import {
   updateDataChart
 } from "../actions";
 import { checkInput, calcAccuracy, saveResultLocalStorage } from "../utils";
-import { initState } from "../state";
+import { initState } from "../store";
 import reducer from "../reducer";
 
 const MainPage = () => {
@@ -107,10 +108,10 @@ const MainPage = () => {
             Reload
           </ButtonReload>
         )}
-        {timer > 0 && <span>{timer}</span>}
+        {timer > 0 && <Timer>{timer}</Timer>}
       </Section>
       {timer < 1 && (
-        <Section>
+        <Section flexDirection='column'>
           <div>WPM: {score}</div>
           <div>Accuracy: {calcAccuracy({ score, errorArr })}</div>
           <div>ERR: {errorArr.length}</div>

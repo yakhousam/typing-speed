@@ -26,6 +26,10 @@ export const Section = styled.section`
   border: solid thin black;
   padding: 20px;
   margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: ${props => props.flexDirection || 'row'}
 `;
 
 export const TextBox = styled.div`
@@ -36,7 +40,15 @@ export const TextBox = styled.div`
 
 export const UserInput = styled.input`
   font-weight: bold;
+  with: 400px;
+  height: 3em;
+  font-size: 22px;
 `;
+
+export const Timer = styled.span`
+  font-size: 22px;
+  margin-left: 1em;
+`
 
 export const Word = styled.span`
   margin-right: 0.5em;
