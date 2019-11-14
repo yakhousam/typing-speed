@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
-  grid-template-rows: 80px auto;
+  grid-template-rows: auto;
   min-height: 100vh;
 `;
 
@@ -19,7 +19,7 @@ export const Header = styled.header`
 `;
 export const Main = styled.main`
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 1;
   padding: 20px;
 `;
 export const Section = styled.section`
@@ -27,15 +27,19 @@ export const Section = styled.section`
   padding: 20px;
   margin: 30px 0;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: ${props => props.flexDirection || 'row'}
+  justify-content: ${props => props.justify || 'center'} ;
+  overflow: auto;
 `;
 
 export const TextBox = styled.div`
   font-size: 36px;
+  font-family: monospace;
   display: flex;
   flex-wrap: wrap;
+  height: ${props => props.height || 'auto'} ;
+  
 `;
 
 export const UserInput = styled.input`
