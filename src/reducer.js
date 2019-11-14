@@ -17,7 +17,9 @@ const reducer = (state, action) => {
   if (action.type === GAME_OVER) {
     console.log(state);
   }
-  // console.log(action.type);
+  if(![DEC_TIMER, UPDATE_DISPLAY_TXT, SET_INPUT].includes(action.type)){
+    console.log(action.type);
+  }
   switch (action.type) {
     case SET_INPUT:
       return { ...state, input: action.input };

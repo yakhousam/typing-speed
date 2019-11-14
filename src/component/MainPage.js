@@ -1,5 +1,5 @@
-import React, { useReducer, useEffect } from "react";
-import Chart from './Chart'
+import React, { useReducer, useEffect, useRef, useState } from "react";
+import Chart from "./Chart";
 import {
   Section,
   UserInput,
@@ -21,12 +21,18 @@ import {
   gameOver,
   updateDataChart
 } from "../actions";
-import { checkInput, calcAccuracy, saveResultLocalStorage } from "../utils";
+import {
+  checkInput,
+  calcAccuracy,
+  saveResultLocalStorage,
+  getOffsetTop  
+} from "../utils";
 import { initState } from "../store";
 import reducer from "../reducer";
 
 const MainPage = () => {
   const [state, dispatch] = useReducer(reducer, initState);
+  const sectionText = useRef();
   const {
     input,
     cursor,
@@ -42,6 +48,7 @@ const MainPage = () => {
     if (timer < 1 || cursor > textArr.length - 1) {
       return;
     }
+
     if (!isTimerStarted && timer > 0) {
       startTimer(true, dispatch);
     }
@@ -61,8 +68,20 @@ const MainPage = () => {
     }
     setInput(input, dispatch);
   };
+  const [offsetTop, setOffsetTop] = useState();
   useEffect(() => {
-    if(timer > 0){
+    if (cursor === 0) {
+      setOffsetTop(getOffsetTop(sectionText));
+    } else {
+      const offset = getOffsetTop(sectionText, offsetTop)
+      if (offset > offsetTop) {
+        setOffsetTop(offset);
+      }
+    }
+  }, [cursor, sectionText, offsetTop, timer]);
+ 
+  useEffect(() => {
+    if (timer > 0) {
       updateDisplayTxt(dispatch);
     }
   }, [cursor, errorArr, input, timer]);
@@ -80,22 +99,17 @@ const MainPage = () => {
   }, [timer, isTimerStarted]);
 
   useEffect(() => {
-    if(timer < 1 && score > 0){
-    const data = saveResultLocalStorage({ score, errorArr });
-    console.log("data =", data)
-    updateDataChart(data, dispatch)
+    if (timer < 1 && score > 0) {
+      const data = saveResultLocalStorage({ score, errorArr });
+      console.log("data =", data);
+      updateDataChart(data, dispatch);
     }
-  },[score, errorArr, timer]);
+  }, [score, errorArr, timer]);
 
   return (
     <Main>
-      <Section flexDirection='column'>
-          <div>WPM: {score}</div>
-          <div>Accuracy: {calcAccuracy({ score, errorArr })}</div>
-          <div>ERR: {errorArr.length}</div>
-        </Section>
-      <Section>
-        <TextBox>{displayText}</TextBox>
+      <Section ref={sectionText}>
+        <TextBox height="3em">{displayText}</TextBox>
       </Section>
       <Section>
         <UserInput
@@ -115,9 +129,23 @@ const MainPage = () => {
         )}
         {timer > 0 && <Timer>{timer}</Timer>}
       </Section>
-      {dataChart.length > 0 && <Chart title= "WPM" data={dataChart.map(d =>({date: d.date, value: d.score}))} />}
-      {dataChart.length > 0 && <Chart title= "Accuracy" data={dataChart.map(d =>({date: d.date, value: d.accuracy}))} />}
-      
+      {true && (
+        <>
+          <Section justify="space-around">
+            <div>WPM: {score}</div>
+            <div>Accuracy: {calcAccuracy({ score, errorArr })}</div>
+            <div>ERR: {errorArr.length}</div>
+          </Section>
+          <Chart
+            title="WPM"
+            data={dataChart.map(d => ({ date: d.date, value: d.score }))}
+          />
+          <Chart
+            title="Accuracy"
+            data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
+          />
+        </>
+      )}
     </Main>
   );
 };
