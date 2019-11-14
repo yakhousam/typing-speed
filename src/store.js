@@ -1,15 +1,17 @@
 import {formatTxt, getDataLocalSorage} from './utils'
+import { getRandomWordList } from './wordList'
 
-const txt = "I'm unstoppable, I'm a porsche with no brakes I'm unstoppable, I'm a porsche with no brakes I'm unstoppable, I'm a porsche with no brakes I'm unstoppable, I'm a porsche with no brakes I'm unstoppable, I'm a porsche with no brakes I'm unstoppable, I'm a porsche with no brakes";
+const wordList = getRandomWordList(60)
 
 export const initState = {
-  displayText: formatTxt(txt),
-  textArr: txt.split(/\s+/),
+  displayText: formatTxt(wordList),
+  textArr: wordList,
   input: "",
   errorArr: [],
   cursor: 0,
   timer: 60,
   isTimerStarted: false,
   score: 0,
-  dataChart: getDataLocalSorage()
+  dataChart: getDataLocalSorage(),
+ 
 };
