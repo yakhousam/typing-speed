@@ -8,49 +8,53 @@ export const checkInput = (input = "", str = "") => {
   return true;
 };
 
-export const formatTxt = txt =>
-  txt.split(/\s+/).map((word, i) => <Word key={i}>{word}</Word>);
+export const formatTxt = wordList =>
+  wordList.map((word, i) => <Word key={i}>{word}</Word>);
 
-export const calcAccuracy = ({score, errorArr}) => {
-  const calc = (100 - ((errorArr.length * 100)/(errorArr.length + score)))
-  return calc ? calc.toFixed(2) : 0
-}
+export const calcAccuracy = ({ score, errorArr }) => {
+  const calc = 100 - (errorArr.length * 100) / (errorArr.length + score);
+  return calc ? calc.toFixed(2) : 0;
+};
 
-
-export const saveResultLocalStorage = ({score, errorArr}) => {
-  const tapingSpeedData = window.localStorage.getItem('tapingSpeedData') ? JSON.parse(window.localStorage.getItem('tapingSpeedData')) : []
+export const saveResultLocalStorage = ({ score, errorArr }) => {
+  const tapingSpeedData = window.localStorage.getItem("tapingSpeedData")
+    ? JSON.parse(window.localStorage.getItem("tapingSpeedData"))
+    : [];
   const data = {
-    accuracy: calcAccuracy({score, errorArr}),
+    accuracy: calcAccuracy({ score, errorArr }),
     date: Date.now(),
     score
-  }
-  tapingSpeedData.push(data)
-  console.log({tapingSpeedData})
-  window.localStorage.setItem('tapingSpeedData', JSON.stringify(tapingSpeedData))
+  };
+  tapingSpeedData.push(data);
+  console.log({ tapingSpeedData });
+  window.localStorage.setItem(
+    "tapingSpeedData",
+    JSON.stringify(tapingSpeedData)
+  );
   return data;
-}
+};
 
 export const getDataLocalSorage = () => {
-  const tapingSpeedData = window.localStorage.getItem('tapingSpeedData') ? JSON.parse(window.localStorage.getItem('tapingSpeedData')) : []
-return tapingSpeedData
-  
-}
-
-
+  const tapingSpeedData = window.localStorage.getItem("tapingSpeedData")
+    ? JSON.parse(window.localStorage.getItem("tapingSpeedData"))
+    : [];
+  return tapingSpeedData;
+};
 
 export const formatDisplayTxt = state => {
   const { cursor, errorArr, input, textArr } = state;
   if (cursor > textArr.length) return state.displayText;
   let currentWord;
   if (!input) {
+    console.log("no input");
     currentWord = (
-      <Word errStyle={errorArr.includes(cursor)} selected key={cursor}>
+      <Word errStyle={errorArr.includes(cursor)} selected key={cursor} className="last" >
         {textArr[cursor]}
       </Word>
     );
   } else {
     currentWord = (
-      <Word errStyle={errorArr.includes(cursor)} selected key={cursor}>
+      <Word errStyle={errorArr.includes(cursor)} selected key={cursor}  className="last" >
         <span
           style={{ color: !errorArr.includes(cursor) ? "green" : "inherit" }}
         >
@@ -105,3 +109,21 @@ export const formatDisplayTxt = state => {
     ];
   }
 };
+
+export const getOffsetTop = (ref, stateOffset) => {
+  const section = ref.current;
+  const span = section.querySelector(".last");
+  if (span) {
+    const offsetTop = span.offsetTop
+    if(offsetTop > stateOffset){
+      const style = getComputedStyle(span);
+      const offset = +style.lineHeight.replace(/[a-z]/gi, "");
+      section.scrollTop = section.scrollTop + offset;  
+    }
+    
+    return offsetTop;
+  } else {
+    return section.querySelector("span").offsetTop;
+  }
+};
+
