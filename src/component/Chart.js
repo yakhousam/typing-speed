@@ -19,12 +19,8 @@ const Chart = ({ data, title }) => {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let x = d3
-      .scaleTime()
-      .domain(
-        d3.extent(data, function(d) {
-          return d.date;
-        })
-      )
+      .scaleLinear()
+      .domain([0, data.length])
       .range([0, width]);
     svg
       .append("g")
@@ -54,8 +50,8 @@ const Chart = ({ data, title }) => {
         "d",
         d3
           .line()
-          .x(function(d) {
-            return x(d.date);
+          .x(function(d, i) {
+            return x(i);
           })
           .y(function(d) {
             return y(d.value);
