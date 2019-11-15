@@ -3,14 +3,15 @@ import styled from "styled-components";
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
-  grid-template-rows: auto;
-  min-height: 100vh;
+  grid-template-rows: 1fr 1fr;
+  height: 100vh;
+  background: #f6f7ff;
 `;
 
 export const SideBare = styled.aside`
   grid-column: 1;
-  grid-row: 1 / span 2;
-  background: grey;
+  grid-row: 1 ;
+  
 `;
 
 export const Header = styled.header`
@@ -31,6 +32,8 @@ export const Section = styled.section`
   flex-direction: ${props => props.flexDirection || 'row'}
   justify-content: ${props => props.justify || 'center'} ;
   overflow: auto;
+  background: #eeeff8;
+
 `;
 
 export const TextBox = styled.div`
@@ -80,4 +83,33 @@ export const Char = styled.span`
 `;
 export const ButtonReload = styled.button`
 
+`
+export const StyledChart = styled.div`
+
+`
+export const ChartsContainer = styled.section`
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #6148ff;
+  border-top-left-radius: 200px;
+  padding-left: 100px
+
+`
+export const ScoreContainer = styled.div`
+ height: 100%;  
+  background: #6148ff;
+  border-bottom-right-radius: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+
+  & p{
+    margin: 0;
+    text-align: center;
+    color: #6de576;
+  }
 `
