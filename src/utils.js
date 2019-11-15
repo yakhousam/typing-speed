@@ -13,7 +13,7 @@ export const formatTxt = wordList =>
 
 export const calcAccuracy = ({ score, errorArr }) => {
   const calc = 100 - (errorArr.length * 100) / (errorArr.length + score);
-  return calc ? calc.toFixed(2) : 0;
+  return calc ? calc.toFixed(0) : 0;
 };
 
 export const saveResultLocalStorage = ({ score, errorArr }) => {
@@ -120,10 +120,10 @@ export const getOffsetTop = (ref, stateOffset) => {
       const offset = +style.lineHeight.replace(/[a-z]/gi, "");
       // section.scrollTop = section.scrollTop + offset; 
       section.scroll({
-        left:0,
         top: section.scrollTop + offset,
         behavior: 'smooth'
       }) 
+      console.log('section scroll =', section.scrollTop)
     }
     
     return offsetTop;
