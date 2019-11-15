@@ -112,11 +112,11 @@ export const formatDisplayTxt = state => {
 
 export const getOffsetTop = (ref, stateOffset) => {
   const section = ref.current;
-  const span = section.querySelector(".last");
-  if (span) {
-    const offsetTop = span.offsetTop
+  const nextWord = section.querySelector(".last");
+  if (nextWord) {
+    const offsetTop = nextWord.offsetTop
     if(offsetTop > stateOffset){
-      const style = getComputedStyle(span);
+      const style = getComputedStyle(nextWord);
       const offset = +style.lineHeight.replace(/[a-z]/gi, "");
       // section.scrollTop = section.scrollTop + offset; 
       section.scroll({

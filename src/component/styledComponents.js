@@ -81,4 +81,3 @@ export const Char = styled.span`
 export const ButtonReload = styled.button`
 
 `
-export const Svg = styled.svg``

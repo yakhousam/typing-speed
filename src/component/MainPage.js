@@ -30,7 +30,7 @@ import {
 import { initState } from "../store";
 import reducer from "../reducer";
 
-const MainPage = () => {
+const MainPage = ({setScore, setAccuracy}) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const sectionText = useRef();
   const {
@@ -103,8 +103,10 @@ const MainPage = () => {
       const data = saveResultLocalStorage({ score, errorArr });
       console.log("data =", data);
       updateDataChart(data, dispatch);
+      setScore(score)
+      setAccuracy(calcAccuracy({ score, errorArr }))
     }
-  }, [score, errorArr, timer]);
+  }, [score, errorArr, timer, setScore, setAccuracy]);
   useEffect(() => {
     sectionText.current.scroll(0, 0);
   },[]);
@@ -139,11 +141,7 @@ const MainPage = () => {
       </Section>
       {true && (
         <>
-          <Section justify="space-around">
-            <div>WPM: {score}</div>
-            <div>Accuracy: {calcAccuracy({ score, errorArr })}</div>
-            <div>ERR: {errorArr.length}</div>
-          </Section>
+          
           <Chart
             title="WPM"
             data={dataChart.map(d => ({ date: d.date, value: d.score }))}
