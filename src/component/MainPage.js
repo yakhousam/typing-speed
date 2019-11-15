@@ -25,7 +25,7 @@ import {
   checkInput,
   calcAccuracy,
   saveResultLocalStorage,
-  getOffsetTop  
+  getOffsetTop
 } from "../utils";
 import { initState } from "../store";
 import reducer from "../reducer";
@@ -73,13 +73,13 @@ const MainPage = () => {
     if (cursor === 0) {
       setOffsetTop(getOffsetTop(sectionText));
     } else {
-      const offset = getOffsetTop(sectionText, offsetTop)
+      const offset = getOffsetTop(sectionText, offsetTop);
       if (offset > offsetTop) {
         setOffsetTop(offset);
       }
     }
   }, [cursor, sectionText, offsetTop, timer]);
- 
+
   useEffect(() => {
     if (timer > 0) {
       updateDisplayTxt(dispatch);
@@ -105,6 +105,9 @@ const MainPage = () => {
       updateDataChart(data, dispatch);
     }
   }, [score, errorArr, timer]);
+  useEffect(() => {
+    sectionText.current.scroll(0, 0);
+  },[]);
 
   return (
     <Main>
@@ -122,6 +125,11 @@ const MainPage = () => {
           <ButtonReload
             onClick={() => {
               reload(dispatch);
+              sectionText.current.scroll({
+                top: 0,
+                left: 0,
+                behavior: "smooth"
+              });
             }}
           >
             Reload

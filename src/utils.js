@@ -118,7 +118,12 @@ export const getOffsetTop = (ref, stateOffset) => {
     if(offsetTop > stateOffset){
       const style = getComputedStyle(span);
       const offset = +style.lineHeight.replace(/[a-z]/gi, "");
-      section.scrollTop = section.scrollTop + offset;  
+      // section.scrollTop = section.scrollTop + offset; 
+      section.scroll({
+        left:0,
+        top: section.scrollTop + offset,
+        behavior: 'smooth'
+      }) 
     }
     
     return offsetTop;
