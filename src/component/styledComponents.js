@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import reload from './reload.png'
 
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1.5fr 1fr;
   height: 100vh;
   background: #f6f7ff;
 `;
@@ -24,7 +25,6 @@ export const Main = styled.main`
   padding: 20px;
 `;
 export const Section = styled.section`
-  border: solid thin black;
   padding: 20px;
   margin: 30px 0;
   display: flex;
@@ -33,6 +33,7 @@ export const Section = styled.section`
   justify-content: ${props => props.justify || 'center'} ;
   overflow: auto;
   background: #eeeff8;
+ border:  solid thin black;
 
 `;
 
@@ -82,8 +83,21 @@ export const Char = styled.span`
     }
   }};
 `;
-export const ButtonReload = styled.button`
+export const ButtonReload = styled.div`
+  margin-left: 10px;
+  background-image: url(${reload});
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 50px;
+  width: 50px;
+  box-shadow:  0 0  5px rgba(0,0,0,0.5);
+  border-radius: 50%;
 
+  &:hover{
+    cursor: pointer;
+  }
+  
 `
 export const StyledChart = styled.div`
 
