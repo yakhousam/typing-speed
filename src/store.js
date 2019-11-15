@@ -12,6 +12,6 @@ export const initState = {
   timer: 60,
   isTimerStarted: false,
   score: 0,
-  dataChart: getDataLocalSorage(),
+  dataChart: [{score:0, accuracy: 0},...getDataLocalSorage()],
  
 };
