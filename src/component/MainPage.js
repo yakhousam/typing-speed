@@ -6,7 +6,8 @@ import {
   TextBox,
   Main,
   ButtonReload,
-  Timer
+  Timer,
+  ChartsContainer
 } from "./styledComponents";
 
 import {
@@ -112,6 +113,7 @@ const MainPage = ({setScore, setAccuracy}) => {
   },[]);
 
   return (
+    <>
     <Main>
       <Section ref={sectionText}>
         <TextBox height="3em">{displayText}</TextBox>
@@ -139,20 +141,20 @@ const MainPage = ({setScore, setAccuracy}) => {
         )}
         {timer > 0 && <Timer>{timer}</Timer>}
       </Section>
-      {true && (
-        <>
-          
-          <Chart
-            title="WPM"
-            data={dataChart.map(d => ({ date: d.date, value: d.score }))}
-          />
-          <Chart
-            title="Accuracy"
-            data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
-          />
-        </>
-      )}
     </Main>
+    {true && (
+      <ChartsContainer>
+        <Chart
+          title="WPM"
+          data={dataChart.map(d => ({ date: d.date, value: d.score }))}
+        />
+        <Chart
+          title="Accuracy"
+          data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
+        />
+      </ChartsContainer>
+    )}
+    </>
   );
 };
 
