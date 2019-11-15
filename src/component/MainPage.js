@@ -129,17 +129,17 @@ const MainPage = ({setScore, setAccuracy}) => {
           <ButtonReload
             onClick={() => {
               reload(dispatch);
+              setScore(0)
+              setAccuracy(100)
               sectionText.current.scroll({
                 top: 0,
                 left: 0,
                 behavior: "smooth"
               });
             }}
-          >
-            Reload
-          </ButtonReload>
+          />
         )}
-        {timer > 0 && <Timer>{timer}</Timer>}
+        {timer > 0 && <Timer>{timer} sec</Timer>}
       </Section>
     </Main>
     {true && (

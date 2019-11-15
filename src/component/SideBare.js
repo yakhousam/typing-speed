@@ -10,7 +10,7 @@ const SideBare = ({ score, accuracy }) => {
           <p>{score}</p>
         </div>
         <div style={{ fontSize: "24px", color: 'orange' }}>
-          Accuracy: <span>{accuracy}</span>{" "}
+          Accuracy: <span>{accuracy}</span>%
         </div>
       </ScoreContainer>
     </Aside>
