@@ -33,7 +33,7 @@ import {
 import { initState } from "../store";
 import reducer from "../reducer";
 
-const MainPage = ({ setScore, setAccuracy }) => {
+const MainPage = ({ setScore, setAccuracy, setTimer }) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const [offsetTop, setOffsetTop] = useState(0);
   const [toolTip, setToolTip] = useState({
@@ -98,8 +98,9 @@ const MainPage = ({ setScore, setAccuracy }) => {
   useEffect(() => {
     if (timer > 0) {
       updateDisplayTxt(dispatch);
+      setTimer(timer)
     }
-  }, [cursor, errorArr, input, timer]);
+  }, [cursor, errorArr, input, timer, startTimer]);
 
   useEffect(() => {
     if (timer > 0 && isTimerStarted) {
@@ -120,8 +121,9 @@ const MainPage = ({ setScore, setAccuracy }) => {
       updateDataChart(data, dispatch);
       setScore(score);
       setAccuracy(calcAccuracy({ score, errorArr }));
+      setTimer(timer)
     }
-  }, [score, errorArr, timer, setScore, setAccuracy]);
+  }, [score, errorArr, timer, setScore, setAccuracy, setTimer]);
   useEffect(() => {
     textBoxRef.current.scroll(0, 0);
   }, []);
@@ -178,7 +180,7 @@ const MainPage = ({ setScore, setAccuracy }) => {
               }}
             />
           )}
-          {timer > 0 && <Timer>{timer} sec</Timer>}
+         
         </Section>
       </Main>
       {true && (
