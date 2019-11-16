@@ -121,7 +121,7 @@ export const formatDisplayTxt = state => {
 };
 
 export const getOffsetTop = (textBoxRef) => {
-  const nextWord = textBoxRef.current.querySelector(".last");
+  const nextWord = textBoxRef.current.querySelector(".last + span");
   if (nextWord) {
     return nextWord.offsetTop;
   } else {

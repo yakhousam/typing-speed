@@ -33,6 +33,7 @@ import reducer from "../reducer";
 
 const MainPage = ({setScore, setAccuracy}) => {
   const [state, dispatch] = useReducer(reducer, initState);
+  const [offsetTop, setOffsetTop] = useState(0);
   const textBoxRef = useRef();
   const {
     input,
@@ -66,25 +67,21 @@ const MainPage = ({setScore, setAccuracy}) => {
     if (input.endsWith(" ")) {
       incrementCursor(dispatch);
       input = "";
+
+      const offset = getOffsetTop(textBoxRef);
+      if (offset > offsetTop) {
+        if(offsetTop > 0){
+          textBoxRef.current.scroll({
+            top: textBoxRef.current.scrollTop + (offset - offsetTop),
+            behavior: 'smooth'
+          }) 
+        } 
+        setOffsetTop(offset);
+      }
     }
     setInput(input, dispatch);
   };
-  const [offsetTop, setOffsetTop] = useState();
-  useEffect(() => {
-    if (cursor === 0) {
-      setOffsetTop(getOffsetTop(textBoxRef));
-    } else {
-      const offset = getOffsetTop(textBoxRef);
-      if (offset > offsetTop) {
-        setOffsetTop(offset);
-        textBoxRef.current.scroll({
-          top: textBoxRef.current.scrollTop + (offset - offsetTop),
-          behavior: 'smooth'
-        }) 
-      }
-    }
-  }, [cursor, textBoxRef, offsetTop]);
-
+  
   useEffect(() => {
     if (timer > 0) {
       updateDisplayTxt(dispatch);
