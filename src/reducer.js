@@ -9,17 +9,20 @@ import {
   DEC_TIMER,
   START_TIMER,
   GAME_OVER,
-  UPDATE_DATA_CHART
+  UPDATE_DATA_CHART,
+  GET_NEW_TXT
 } from "./actions";
-import { formatDisplayTxt } from "./utils";
+
+import { formatDisplayTxt, formatTxt } from "./utils";
 import { initState } from "./store";
+import { getRandomWordList } from './wordList'
 
 const reducer = (state, action) => {
   if (action.type === GAME_OVER) {
     console.log(state);
   }
+    //  console.log(action.type);
   // if(![DEC_TIMER, UPDATE_DISPLAY_TXT, SET_INPUT].includes(action.type)){
-  //   console.log(action.type);
   // }
   switch (action.type) {
     case SET_INPUT:
@@ -47,7 +50,7 @@ const reducer = (state, action) => {
     case INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
     case RELOAD:
-      return { ...initState, dataChart: [...state.dataChart] };
+      return { ...initState, displayText: formatTxt(state.textArr), textArr: [...state.textArr], dataChart: [...state.dataChart] };
     case DEC_TIMER:
       return { ...state, timer: state.timer - 1 };
     case START_TIMER:
@@ -60,13 +63,16 @@ const reducer = (state, action) => {
         input: "",
         displayText: [
           ...state.displayText.slice(0, state.cursor),
-          ...initState.displayText.slice(state.cursor)
+          ...formatTxt(state.textArr.slice(state.cursor))
         ],
         score: x > 0 ? x : 0,
         errorArr: state.errorArr.filter(el => el !== state.cursor)
       };
     case UPDATE_DATA_CHART:
       return{...state, dataChart: [...state.dataChart, action.data]}
+    case GET_NEW_TXT:
+      const wordList = getRandomWordList(200)
+      return {...state, displayText: formatTxt(wordList), textArr: wordList }
 
     default:
       return state;

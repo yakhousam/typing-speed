@@ -8,8 +8,8 @@ export const RELOAD = "RELOAD";
 export const START_TIMER = "START_TIMER";
 export const DEC_TIMER = "DEC_TIMER";
 export const GAME_OVER = "GAME_OVER";
-export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART"
-
+export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART";
+export const GET_NEW_TXT = "GET_NEW_TXT";
 
 export const setInput = (input, dispatch) => {
   dispatch({ type: SET_INPUT, input });
@@ -45,6 +45,9 @@ export const gameOver = dispatch => {
   dispatch({ type: GAME_OVER });
 };
 export const updateDataChart = (data, dispatch) => {
-  dispatch({type: UPDATE_DATA_CHART, data})
-}
+  dispatch({ type: UPDATE_DATA_CHART, data });
+};
 
+export const getNewTxt = dispatch => {
+  dispatch({ type: GET_NEW_TXT });
+};

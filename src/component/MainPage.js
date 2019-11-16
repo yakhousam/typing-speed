@@ -22,7 +22,8 @@ import {
   decTimer,
   startTimer,
   gameOver,
-  updateDataChart
+  updateDataChart,
+  getNewTxt
 } from "../actions";
 import {
   checkInput,
@@ -98,9 +99,9 @@ const MainPage = ({ setScore, setAccuracy, setTimer }) => {
   useEffect(() => {
     if (timer > 0) {
       updateDisplayTxt(dispatch);
-      setTimer(timer)
+      setTimer(timer);
     }
-  }, [cursor, errorArr, input, timer, startTimer]);
+  }, [cursor, errorArr, input, timer, setTimer]);
 
   useEffect(() => {
     if (timer > 0 && isTimerStarted) {
@@ -121,7 +122,7 @@ const MainPage = ({ setScore, setAccuracy, setTimer }) => {
       updateDataChart(data, dispatch);
       setScore(score);
       setAccuracy(calcAccuracy({ score, errorArr }));
-      setTimer(timer)
+      setTimer(timer);
     }
   }, [score, errorArr, timer, setScore, setAccuracy, setTimer]);
   useEffect(() => {
@@ -131,30 +132,37 @@ const MainPage = ({ setScore, setAccuracy, setTimer }) => {
   return (
     <>
       <Main>
+        <button
+          onClick={() => {
+            getNewTxt(dispatch);
+          }}
+        >
+          New text
+        </button>
         <TextBox
-          id='textBox'
+          id="textBox"
           ref={textBoxRef}
           height="5em"
           onMouseOut={() => {
             setToolTip({ ...toolTip, visible: false });
           }}
           onMouseOver={e => {
-            const { id = 20000 } = e.target;          
-            const error = errorArrTxt.find(el => el.id === +id);           
+            const { id = 20000 } = e.target;
+            const error = errorArrTxt.find(el => el.id === +id);
             if (error) {
               setToolTip({
                 ...toolTip,
                 visible: true,
-                txt: error.input                
+                txt: error.input
               });
             }
           }}
           onMouseMove={e => {
             const left = e.clientX;
             const top = e.clientY;
-            if(toolTip.visible){
+            if (toolTip.visible) {
               setToolTip({ ...toolTip, left, top });
-            }           
+            }
           }}
         >
           {displayText}
@@ -180,7 +188,6 @@ const MainPage = ({ setScore, setAccuracy, setTimer }) => {
               }}
             />
           )}
-         
         </Section>
       </Main>
       {true && (
