@@ -3,7 +3,6 @@ const txt =
 const wordListArr = txt.split("|");
 
 export const getRandomWordList = number => {
-  number = number > wordListArr.length ? wordListArr.length : number;
   const wordList = Array(number)
     .fill(0)
     .map(el => {

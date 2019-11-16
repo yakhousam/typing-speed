@@ -48,13 +48,23 @@ export const formatDisplayTxt = state => {
   if (!input) {
     console.log("no input");
     currentWord = (
-      <Word errStyle={errorArr.includes(cursor)} selected key={cursor} className="last" >
+      <Word
+        errStyle={errorArr.includes(cursor)}
+        selected
+        key={cursor}
+        className="last"
+      >
         {textArr[cursor]}
       </Word>
     );
   } else {
     currentWord = (
-      <Word errStyle={errorArr.includes(cursor)} selected key={cursor}  className="last" >
+      <Word
+        errStyle={errorArr.includes(cursor)}
+        selected
+        key={cursor}
+        className="last"
+      >
         <span
           style={{ color: !errorArr.includes(cursor) ? "green" : "inherit" }}
         >
@@ -110,25 +120,11 @@ export const formatDisplayTxt = state => {
   }
 };
 
-export const getOffsetTop = (ref, stateOffset) => {
-  const section = ref.current;
-  const nextWord = section.querySelector(".last");
+export const getOffsetTop = (textBoxRef) => {
+  const nextWord = textBoxRef.current.querySelector(".last");
   if (nextWord) {
-    const offsetTop = nextWord.offsetTop
-    if(offsetTop > stateOffset){
-      const style = getComputedStyle(nextWord);
-      const offset = +style.lineHeight.replace(/[a-z]/gi, "");
-      // section.scrollTop = section.scrollTop + offset; 
-      section.scroll({
-        top: section.scrollTop + offset,
-        behavior: 'smooth'
-      }) 
-      console.log('section scroll =', section.scrollTop)
-    }
-    
-    return offsetTop;
+    return nextWord.offsetTop;
   } else {
-    return section.querySelector("span").offsetTop;
+    return textBoxRef.current.querySelector("span").offsetTop;
   }
 };
-

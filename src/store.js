@@ -1,7 +1,7 @@
 import {formatTxt, getDataLocalSorage} from './utils'
 import { getRandomWordList } from './wordList'
 
-const wordList = getRandomWordList(600)
+const wordList = getRandomWordList(200)
 
 export const initState = {
   displayText: formatTxt(wordList),
