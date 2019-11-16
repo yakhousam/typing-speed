@@ -43,6 +43,10 @@ export const TextBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   height: ${props => props.height || 'auto'} ;
+
+  overflow: auto;
+  background: #eeeff8;
+ border:  solid thin black
   
 `;
 

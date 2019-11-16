@@ -33,7 +33,7 @@ import reducer from "../reducer";
 
 const MainPage = ({setScore, setAccuracy}) => {
   const [state, dispatch] = useReducer(reducer, initState);
-  const sectionText = useRef();
+  const textBoxRef = useRef();
   const {
     input,
     cursor,
@@ -72,14 +72,18 @@ const MainPage = ({setScore, setAccuracy}) => {
   const [offsetTop, setOffsetTop] = useState();
   useEffect(() => {
     if (cursor === 0) {
-      setOffsetTop(getOffsetTop(sectionText));
+      setOffsetTop(getOffsetTop(textBoxRef));
     } else {
-      const offset = getOffsetTop(sectionText, offsetTop);
+      const offset = getOffsetTop(textBoxRef);
       if (offset > offsetTop) {
         setOffsetTop(offset);
+        textBoxRef.current.scroll({
+          top: textBoxRef.current.scrollTop + (offset - offsetTop),
+          behavior: 'smooth'
+        }) 
       }
     }
-  }, [cursor, sectionText, offsetTop, timer]);
+  }, [cursor, textBoxRef, offsetTop]);
 
   useEffect(() => {
     if (timer > 0) {
@@ -109,15 +113,13 @@ const MainPage = ({setScore, setAccuracy}) => {
     }
   }, [score, errorArr, timer, setScore, setAccuracy]);
   useEffect(() => {
-    sectionText.current.scroll(0, 0);
+    textBoxRef.current.scroll(0, 0);
   },[]);
 
   return (
     <>
-    <Main>
-      <Section ref={sectionText}>
-        <TextBox height="3em">{displayText}</TextBox>
-      </Section>
+    <Main>     
+        <TextBox ref={textBoxRef} height="3em">{displayText}</TextBox>     
       <Section>
         <UserInput
           type="text"
@@ -131,7 +133,7 @@ const MainPage = ({setScore, setAccuracy}) => {
               reload(dispatch);
               setScore(0)
               setAccuracy(100)
-              sectionText.current.scroll({
+              textBoxRef.current.scroll({
                 top: 0,
                 left: 0,
                 behavior: "smooth"
