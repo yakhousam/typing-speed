@@ -3,6 +3,7 @@ import {
   UPDATE_DISPLAY_TXT,
   INC_CURSOR,
   ADD_ERROR,
+  ADD_ERROR_TXT,
   REMOVE_ERROR,
   RELOAD,
   DEC_TIMER,
@@ -31,13 +32,18 @@ const reducer = (state, action) => {
     case ADD_ERROR:
       return {
         ...state,
-        errorArr: [...state.errorArr, state.cursor]
+        errorArr: [...state.errorArr, state.cursor]        
       };
     case REMOVE_ERROR:
       return {
         ...state,
         errorArr: state.errorArr.filter(el => el !== state.cursor)
       };
+    case ADD_ERROR_TXT:
+      return {
+        ...state,
+        errorArrTxt: [...state.errorArrTxt, action.error]
+      }
     case INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
     case RELOAD:

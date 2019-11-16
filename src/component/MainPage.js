@@ -14,6 +14,7 @@ import {
   setInput,
   incrementCursor,
   addError,
+  addErrorTxt,
   removeError,
   reload,
   updateDisplayTxt,
@@ -57,7 +58,7 @@ const MainPage = ({setScore, setAccuracy}) => {
     let input = e.target.value;
     if (!checkInput(input, textArr[cursor])) {
       if (!errorArr.includes(cursor)) {
-        addError(dispatch);
+        addError(dispatch, input);
       }
     } else {
       if (errorArr.includes(cursor)) {
@@ -65,6 +66,9 @@ const MainPage = ({setScore, setAccuracy}) => {
       }
     }
     if (input.endsWith(" ")) {
+      if(errorArr.includes(cursor)){
+        addErrorTxt(dispatch, {id: cursor, input})
+      }
       incrementCursor(dispatch);
       input = "";
 
@@ -116,7 +120,7 @@ const MainPage = ({setScore, setAccuracy}) => {
   return (
     <>
     <Main>     
-        <TextBox ref={textBoxRef} height="3em">{displayText}</TextBox>     
+        <TextBox ref={textBoxRef} height="5em">{displayText}</TextBox>     
       <Section>
         <UserInput
           type="text"

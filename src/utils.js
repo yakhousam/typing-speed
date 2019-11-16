@@ -9,7 +9,7 @@ export const checkInput = (input = "", str = "") => {
 };
 
 export const formatTxt = wordList =>
-  wordList.map((word, i) => <Word key={i}>{word}</Word>);
+  wordList.map((word, i) => <Word  id={i} key={i}>{word}</Word>);
 
 export const calcAccuracy = ({ score, errorArr }) => {
   const calc = 100 - (errorArr.length * 100) / (errorArr.length + score);
@@ -46,12 +46,12 @@ export const formatDisplayTxt = state => {
   if (cursor > textArr.length) return state.displayText;
   let currentWord;
   if (!input) {
-    console.log("no input");
     currentWord = (
       <Word
         errStyle={errorArr.includes(cursor)}
         selected
         key={cursor}
+        id={cursor}
         className="last"
       >
         {textArr[cursor]}
@@ -63,6 +63,7 @@ export const formatDisplayTxt = state => {
         errStyle={errorArr.includes(cursor)}
         selected
         key={cursor}
+        id={cursor}
         className="last"
       >
         <span
@@ -85,6 +86,7 @@ export const formatDisplayTxt = state => {
       <Word
         errStyle={errorArr.includes(0)}
         isCorrect={!errorArr.includes(0)}
+        id={0}
         key={0}
       >
         {state.textArr[0]}
@@ -100,6 +102,7 @@ export const formatDisplayTxt = state => {
         errStyle={errorArr.includes(cursor - 1)}
         isCorrect={!errorArr.includes(cursor - 1)}
         key={cursor - 1}
+        id={cursor -1}
       >
         {state.textArr[cursor - 1]}
       </Word>,
@@ -113,6 +116,7 @@ export const formatDisplayTxt = state => {
         errStyle={errorArr.includes(cursor - 1)}
         isCorrect={!errorArr.includes(cursor - 1)}
         key={cursor - 1}
+        id={cursor -1}
       >
         {state.textArr[cursor - 1]}
       </Word>
