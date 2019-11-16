@@ -90,7 +90,7 @@ export const Char = styled.span`
 export const ButtonReload = styled.div`
   margin-left: 10px;
   background-image: url(${reload});
-  background-size: 100%;
+  background-size: 90%;
   background-repeat: no-repeat;
   background-position: center;
   height: 50px;
@@ -131,4 +131,16 @@ export const ScoreContainer = styled.div`
     text-align: center;
     color: #6de576;
   }
+`
+
+export const ToolTip = styled.div`
+  padding: .2em .5em;
+  font-size: 36px;
+  background: white;
+  border: solid thin black;
+  visibility: ${props => props.visible ? 'visible' : 'hidden'}
+
+  position: absolute;
+  top: ${props => props.top + 10 + 'px'}
+  left: ${props => props.left + 10 + 'px'}
 `

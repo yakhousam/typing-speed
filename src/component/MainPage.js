@@ -7,7 +7,8 @@ import {
   Main,
   ButtonReload,
   Timer,
-  ChartsContainer
+  ChartsContainer,
+  ToolTip
 } from "./styledComponents";
 
 import {
@@ -32,9 +33,15 @@ import {
 import { initState } from "../store";
 import reducer from "../reducer";
 
-const MainPage = ({setScore, setAccuracy}) => {
+const MainPage = ({ setScore, setAccuracy }) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const [offsetTop, setOffsetTop] = useState(0);
+  const [toolTip, setToolTip] = useState({
+    visible: false,
+    top: 0,
+    left: 0,
+    txt: ""
+  });
   const textBoxRef = useRef();
   const {
     input,
@@ -42,11 +49,13 @@ const MainPage = ({setScore, setAccuracy}) => {
     displayText,
     textArr,
     errorArr,
+    errorArrTxt,
     timer,
     isTimerStarted,
     score,
     dataChart
   } = state;
+
   const handleChange = e => {
     if (timer < 1 || cursor > textArr.length - 1) {
       return;
@@ -66,26 +75,26 @@ const MainPage = ({setScore, setAccuracy}) => {
       }
     }
     if (input.endsWith(" ")) {
-      if(errorArr.includes(cursor)){
-        addErrorTxt(dispatch, {id: cursor, input})
+      if (errorArr.includes(cursor)) {
+        addErrorTxt(dispatch, { id: cursor, input });
       }
       incrementCursor(dispatch);
       input = "";
 
       const offset = getOffsetTop(textBoxRef);
       if (offset > offsetTop) {
-        if(offsetTop > 0){
+        if (offsetTop > 0) {
           textBoxRef.current.scroll({
             top: textBoxRef.current.scrollTop + (offset - offsetTop),
-            behavior: 'smooth'
-          }) 
-        } 
+            behavior: "smooth"
+          });
+        }
         setOffsetTop(offset);
       }
     }
     setInput(input, dispatch);
   };
-  
+
   useEffect(() => {
     if (timer > 0) {
       updateDisplayTxt(dispatch);
@@ -109,54 +118,82 @@ const MainPage = ({setScore, setAccuracy}) => {
       const data = saveResultLocalStorage({ score, errorArr });
       console.log("data =", data);
       updateDataChart(data, dispatch);
-      setScore(score)
-      setAccuracy(calcAccuracy({ score, errorArr }))
+      setScore(score);
+      setAccuracy(calcAccuracy({ score, errorArr }));
     }
   }, [score, errorArr, timer, setScore, setAccuracy]);
   useEffect(() => {
     textBoxRef.current.scroll(0, 0);
-  },[]);
+  }, []);
 
   return (
     <>
-    <Main>     
-        <TextBox ref={textBoxRef} height="5em">{displayText}</TextBox>     
-      <Section>
-        <UserInput
-          type="text"
-          autoFocus
-          value={input}
-          onChange={handleChange}
-        />
-        {timer < 1 && (
-          <ButtonReload
-            onClick={() => {
-              reload(dispatch);
-              setScore(0)
-              setAccuracy(100)
-              textBoxRef.current.scroll({
-                top: 0,
-                left: 0,
-                behavior: "smooth"
+      <Main>
+        <TextBox
+          id='textBox'
+          ref={textBoxRef}
+          height="5em"
+          onMouseOut={() => {
+            setToolTip({ ...toolTip, visible: false });
+          }}
+          onMouseOver={e => {
+            const { id = 20000 } = e.target;          
+            const error = errorArrTxt.find(el => el.id === +id);           
+            if (error) {
+              setToolTip({
+                ...toolTip,
+                visible: true,
+                txt: error.input                
               });
-            }}
+            }
+          }}
+          onMouseMove={e => {
+            const left = e.clientX;
+            const top = e.clientY;
+            if(toolTip.visible){
+              setToolTip({ ...toolTip, left, top });
+            }           
+          }}
+        >
+          {displayText}
+        </TextBox>
+        <Section>
+          <UserInput
+            type="text"
+            autoFocus
+            value={input}
+            onChange={handleChange}
           />
-        )}
-        {timer > 0 && <Timer>{timer} sec</Timer>}
-      </Section>
-    </Main>
-    {true && (
-      <ChartsContainer>
-        <Chart
-          title="WPM"
-          data={dataChart.map(d => ({ date: d.date, value: d.score }))}
-        />
-        <Chart
-          title="Accuracy"
-          data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
-        />
-      </ChartsContainer>
-    )}
+          {timer < 1 && (
+            <ButtonReload
+              onClick={() => {
+                reload(dispatch);
+                setScore(0);
+                setAccuracy(100);
+                textBoxRef.current.scroll({
+                  top: 0,
+                  left: 0,
+                  behavior: "smooth"
+                });
+              }}
+            />
+          )}
+          {timer > 0 && <Timer>{timer} sec</Timer>}
+        </Section>
+      </Main>
+      {true && (
+        <ChartsContainer>
+          <Chart
+            title="WPM"
+            data={dataChart.map(d => ({ date: d.date, value: d.score }))}
+          />
+          <Chart
+            title="Accuracy"
+            data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
+          />
+        </ChartsContainer>
+      )}
+      <ToolTip {...toolTip}>{toolTip.txt}</ToolTip>
     </>
   );
 };
