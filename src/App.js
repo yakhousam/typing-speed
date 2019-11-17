@@ -1,34 +1,24 @@
-import React, { useReducer, useEffect, useRef, useState } from "react";
+import React, { useReducer, useEffect } from "react";
 import { createGlobalStyle } from "styled-components";
 import SideBare from "./component/SideBare";
 import Chart from "./component/Chart";
+import TextBox from './component/TextBox'
+import ToolTip from './component/ToolTip'
+import InputContainer from './component/InputContainer'
 import {
   Grid,
-  Section,
-  UserInput,
-  TextBox,
   Main,
-  ButtonReload,
   ChartsContainer,
-  ToolTip
 } from "./component/styledComponents";
 
 import {
-  setInput,
-  incrementCursor,
-  addError,
-  addErrorTxt,
-  removeError,
-  reload,
   updateDisplayTxt,
   decTimer,
-  startTimer,
   gameOver,
   updateDataChart,
-  getNewTxt,
-  updateCurrentWordOffset
+  getNewTxt
 } from "./actions";
-import { checkInput, saveResultLocalStorage, getOffsetTop } from "./utils";
+import {  saveResultLocalStorage } from "./utils";
 import { initState } from "./store";
 import reducer from "./reducer";
 
@@ -44,67 +34,16 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initState);
-  const [toolTip, setToolTip] = useState({
-    visible: false,
-    top: 0,
-    left: 0,
-    txt: ""
-  });
-  const textBoxRef = useRef();
   const {
     input,
     cursor,
-    displayText,
-    textArr,
     errorArr,
-    errorArrTxt,
     timer,
     isTimerStarted,
     score,
     dataChart,
-    accuracy,
-    currentWordOffsetTop
-  } = state;
-
-  const handleChange = e => {
-    if (timer < 1 || cursor > textArr.length - 1) {
-      return;
-    }
-
-    if (!isTimerStarted && timer > 0) {
-      startTimer(true, dispatch);
-    }
-    let input = e.target.value;
-    if (!checkInput(input, textArr[cursor])) {
-      if (!errorArr.includes(cursor)) {
-        addError(dispatch, input);
-      }
-    } else {
-      if (errorArr.includes(cursor)) {
-        removeError(dispatch);
-      }
-    }
-    if (input.endsWith(" ")) {
-      if (errorArr.includes(cursor)) {
-        addErrorTxt(dispatch, { id: cursor, input });
-      }
-      incrementCursor(dispatch);
-      input = "";
-
-      const offset = getOffsetTop(textBoxRef);
-      console.log(offset, currentWordOffsetTop);
-      if (offset > currentWordOffsetTop) {
-        if (currentWordOffsetTop > 0) {
-          textBoxRef.current.scroll({
-            top: textBoxRef.current.scrollTop + (offset - currentWordOffsetTop),
-            behavior: "smooth"
-          });
-        }
-        updateCurrentWordOffset(dispatch, offset);
-      }
-    }
-    setInput(input, dispatch);
-  };
+    accuracy
+  } = state;  
 
   useEffect(() => {
     if (timer > 0) {
@@ -131,9 +70,7 @@ function App() {
       updateDataChart(data, dispatch);
     }
   }, [score, accuracy, timer]);
-  useEffect(() => {
-    textBoxRef.current.scroll(0, 0);
-  }, []);
+ 
   return (
     <>
       <GlobalStyle />
@@ -143,60 +80,15 @@ function App() {
           <button
             onClick={() => {
               getNewTxt(dispatch);
+              updateDisplayTxt(dispatch);
             }}
           >
             New text
           </button>
-          <TextBox
-            id="textBox"
-            ref={textBoxRef}
-            height="5em"
-            onMouseOut={() => {
-              setToolTip({ ...toolTip, visible: false });
-            }}
-            onMouseOver={e => {
-              const { id = 20000 } = e.target;
-              const error = errorArrTxt.find(el => el.id === +id);
-              if (error) {
-                setToolTip({
-                  ...toolTip,
-                  visible: true,
-                  txt: error.input
-                });
-              }
-            }}
-            onMouseMove={e => {
-              const left = e.clientX;
-              const top = e.clientY;
-              if (toolTip.visible) {
-                setToolTip({ ...toolTip, left, top });
-              }
-            }}
-          >
-            {displayText}
-          </TextBox>
-          <Section>
-            <UserInput
-              type="text"
-              autoFocus
-              value={input}
-              onChange={handleChange}
-            />
-            {timer < 1 && (
-              <ButtonReload
-                onClick={() => {
-                  reload(dispatch);
-                  textBoxRef.current.scroll({
-                    top: 0,
-                    left: 0,
-                    behavior: "smooth"
-                  });
-                }}
-              />
-            )}
-          </Section>
+          <TextBox  state={state} dispatch={dispatch} />
+          <InputContainer state={state} dispatch={dispatch} />
         </Main>
-        {true && (
+        
           <ChartsContainer>
             <Chart
               title="WPM"
@@ -207,8 +99,8 @@ function App() {
               data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
             />
           </ChartsContainer>
-        )}
-        <ToolTip {...toolTip}>{toolTip.txt}</ToolTip>
+        
+        <ToolTip {...state.toolTip} />
       </Grid>
     </>
   );

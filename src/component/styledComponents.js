@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import reload from './reload.png'
+
 
 export const Grid = styled.div`
   display: grid;
@@ -24,20 +24,9 @@ export const Main = styled.main`
   grid-row: 1;
   padding: 20px;
 `;
-export const Section = styled.section`
-  padding: 20px;
-  margin: 30px 0;
-  display: flex;
-  align-items: center;
-  flex-direction: ${props => props.flexDirection || 'row'}
-  justify-content: ${props => props.justify || 'center'} ;
-  overflow: auto;
-  background: #eeeff8;
- border:  solid thin black;
 
-`;
 
-export const TextBox = styled.div`
+export const StyledTextBox = styled.div`
   font-size: 36px;
   font-family: monospace;
   display: flex;
@@ -50,12 +39,7 @@ export const TextBox = styled.div`
   
 `;
 
-export const UserInput = styled.input`
-  font-weight: bold;
-  with: 400px;
-  height: 3em;
-  font-size: 22px;
-`;
+
 
 export const Timer = styled.span`
   font-size: 22px;
@@ -87,22 +71,7 @@ export const Char = styled.span`
     }
   }};
 `;
-export const ButtonReload = styled.div`
-  margin-left: 10px;
-  background-image: url(${reload});
-  background-size: 90%;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 50px;
-  width: 50px;
-  box-shadow:  0 0  5px rgba(0,0,0,0.5);
-  border-radius: 50%;
 
-  &:hover{
-    cursor: pointer;
-  }
-  
-`
 export const StyledChart = styled.div`
 
 `
@@ -133,14 +102,3 @@ export const ScoreContainer = styled.div`
   }
 `
 
-export const ToolTip = styled.div`
-  padding: .2em .5em;
-  font-size: 36px;
-  background: white;
-  border: solid thin black;
-  visibility: ${props => props.visible ? 'visible' : 'hidden'}
-
-  position: absolute;
-  top: ${props => props.top + 10 + 'px'}
-  left: ${props => props.left + 10 + 'px'}
-`

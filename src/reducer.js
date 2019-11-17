@@ -11,18 +11,19 @@ import {
   GAME_OVER,
   UPDATE_DATA_CHART,
   GET_NEW_TXT,
-  UPDATE_CURRENT_WORD_OFFSET
+  UPDATE_CURRENT_WORD_OFFSET,
+  UPDATE_TOOLTIP
 } from "./actions";
 
 import { formatDisplayTxt, formatTxt, calcAccuracy } from "./utils";
 import { initState } from "./store";
-import { getRandomWordList } from './wordList'
+import { getRandomWordList } from "./wordList";
 
 const reducer = (state, action) => {
   if (action.type === GAME_OVER) {
     console.log(state);
   }
-    //  console.log(action.type);
+  //  console.log(action.type);
   // if(![DEC_TIMER, UPDATE_DISPLAY_TXT, SET_INPUT].includes(action.type)){
   // }
   switch (action.type) {
@@ -36,7 +37,7 @@ const reducer = (state, action) => {
     case ADD_ERROR:
       return {
         ...state,
-        errorArr: [...state.errorArr, state.cursor]        
+        errorArr: [...state.errorArr, state.cursor]
       };
     case REMOVE_ERROR:
       return {
@@ -47,21 +48,28 @@ const reducer = (state, action) => {
       return {
         ...state,
         errorArrTxt: [...state.errorArrTxt, action.error]
-      }
+      };
     case INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
     case RELOAD:
-      return { ...initState, displayText: formatTxt(state.textArr), textArr: [...state.textArr], dataChart: [...state.dataChart] };
+      return {
+        ...initState,
+        displayText: formatTxt(state.textArr),
+        textArr: [...state.textArr],
+        dataChart: [...state.dataChart]
+      };
     case DEC_TIMER:
       return { ...state, timer: state.timer - 1 };
     case START_TIMER:
       return { ...state, isTimerStarted: true };
     case GAME_OVER:
-      const x = state.cursor - state.errorArr.filter(el => el !== state.cursor).length;
+      const x =
+        state.cursor - state.errorArr.filter(el => el !== state.cursor).length;
       const score = x > 0 ? x : 0;
       const errorArr = state.errorArr.filter(el => el !== state.cursor);
       return {
         ...state,
+        cursor: 0,
         isTimerStarted: false,
         currentWordOffsetTop: 0,
         input: "",
@@ -71,15 +79,17 @@ const reducer = (state, action) => {
         ],
         score,
         errorArr,
-        accuracy: calcAccuracy({score, errorArr})
+        accuracy: calcAccuracy({ score, errorArr })
       };
     case UPDATE_DATA_CHART:
-      return{...state, dataChart: [...state.dataChart, action.data]}
+      return { ...state, dataChart: [...state.dataChart, action.data] };
     case GET_NEW_TXT:
-      const wordList = getRandomWordList(200)
-      return {...state, displayText: formatTxt(wordList), textArr: wordList }
+      const wordList = getRandomWordList(200);
+      return { ...state, displayText: formatTxt(wordList), textArr: wordList };
     case UPDATE_CURRENT_WORD_OFFSET:
-      return {...state, currentWordOffsetTop: action.offset }
+      return { ...state, currentWordOffsetTop: action.offset };
+    case UPDATE_TOOLTIP:
+      return { ...state, toolTip: { ...state.toolTip, ...action.toolTip } };
 
     default:
       return state;

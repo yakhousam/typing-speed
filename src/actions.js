@@ -11,6 +11,7 @@ export const GAME_OVER = "GAME_OVER";
 export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART";
 export const GET_NEW_TXT = "GET_NEW_TXT";
 export const UPDATE_CURRENT_WORD_OFFSET = "UPDATE_CURRENT_WORD_OFFSET"
+export const UPDATE_TOOLTIP = "UPDATE_TOOLTIP"
 
 export const setInput = (input, dispatch) => {
   dispatch({ type: SET_INPUT, input });
@@ -55,4 +56,7 @@ export const getNewTxt = dispatch => {
 export const updateCurrentWordOffset = (dispatch, offset) => {
   dispatch({ type: UPDATE_CURRENT_WORD_OFFSET, offset });
 };
+export const updateToolTip = (dispatch, toolTip) =>{
+  dispatch({type: UPDATE_TOOLTIP, toolTip})
+}
 
