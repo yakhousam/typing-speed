@@ -10,6 +10,7 @@ export const DEC_TIMER = "DEC_TIMER";
 export const GAME_OVER = "GAME_OVER";
 export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART";
 export const GET_NEW_TXT = "GET_NEW_TXT";
+export const UPDATE_CURRENT_WORD_OFFSET = "UPDATE_CURRENT_WORD_OFFSET"
 
 export const setInput = (input, dispatch) => {
   dispatch({ type: SET_INPUT, input });
@@ -51,3 +52,7 @@ export const updateDataChart = (data, dispatch) => {
 export const getNewTxt = dispatch => {
   dispatch({ type: GET_NEW_TXT });
 };
+export const updateCurrentWordOffset = (dispatch, offset) => {
+  dispatch({ type: UPDATE_CURRENT_WORD_OFFSET, offset });
+};
+

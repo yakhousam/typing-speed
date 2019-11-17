@@ -25,13 +25,10 @@ import {
   startTimer,
   gameOver,
   updateDataChart,
-  getNewTxt
+  getNewTxt,
+  updateCurrentWordOffset
 } from "./actions";
-import {
-  checkInput,
-  saveResultLocalStorage,
-  getOffsetTop
-} from "./utils";
+import { checkInput, saveResultLocalStorage, getOffsetTop } from "./utils";
 import { initState } from "./store";
 import reducer from "./reducer";
 
@@ -47,7 +44,6 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initState);
-  const [offsetTop, setOffsetTop] = useState(0);
   const [toolTip, setToolTip] = useState({
     visible: false,
     top: 0,
@@ -66,7 +62,8 @@ function App() {
     isTimerStarted,
     score,
     dataChart,
-    accuracy
+    accuracy,
+    currentWordOffsetTop
   } = state;
 
   const handleChange = e => {
@@ -95,14 +92,15 @@ function App() {
       input = "";
 
       const offset = getOffsetTop(textBoxRef);
-      if (offset > offsetTop) {
-        if (offsetTop > 0) {
+      console.log(offset, currentWordOffsetTop);
+      if (offset > currentWordOffsetTop) {
+        if (currentWordOffsetTop > 0) {
           textBoxRef.current.scroll({
-            top: textBoxRef.current.scrollTop + (offset - offsetTop),
+            top: textBoxRef.current.scrollTop + (offset - currentWordOffsetTop),
             behavior: "smooth"
           });
         }
-        setOffsetTop(offset);
+        updateCurrentWordOffset(dispatch, offset);
       }
     }
     setInput(input, dispatch);
@@ -131,8 +129,6 @@ function App() {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
       updateDataChart(data, dispatch);
-
-      setOffsetTop(0);
     }
   }, [score, accuracy, timer]);
   useEffect(() => {

@@ -10,7 +10,8 @@ import {
   START_TIMER,
   GAME_OVER,
   UPDATE_DATA_CHART,
-  GET_NEW_TXT
+  GET_NEW_TXT,
+  UPDATE_CURRENT_WORD_OFFSET
 } from "./actions";
 
 import { formatDisplayTxt, formatTxt, calcAccuracy } from "./utils";
@@ -62,6 +63,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isTimerStarted: false,
+        currentWordOffsetTop: 0,
         input: "",
         displayText: [
           ...state.displayText.slice(0, state.cursor),
@@ -76,6 +78,8 @@ const reducer = (state, action) => {
     case GET_NEW_TXT:
       const wordList = getRandomWordList(200)
       return {...state, displayText: formatTxt(wordList), textArr: wordList }
+    case UPDATE_CURRENT_WORD_OFFSET:
+      return {...state, currentWordOffsetTop: action.offset }
 
     default:
       return state;

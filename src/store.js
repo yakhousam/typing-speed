@@ -14,6 +14,7 @@ export const initState = {
   isTimerStarted: false,
   score: 0,
   dataChart: [{score:0, accuracy: 0},...getDataLocalSorage()],
-  accuracy: 100
+  accuracy: 100,
+  currentWordOffsetTop: 0
  
 };
