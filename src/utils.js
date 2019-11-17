@@ -16,13 +16,13 @@ export const calcAccuracy = ({ score, errorArr }) => {
   return calc ? calc.toFixed(0) : 0;
 };
 
-export const saveResultLocalStorage = ({ score, errorArr }) => {
+export const saveResultLocalStorage = ({ score, accuracy }) => {
   const tapingSpeedData = window.localStorage.getItem("tapingSpeedData")
     ? JSON.parse(window.localStorage.getItem("tapingSpeedData"))
     : [];
   const data = {
-    accuracy: calcAccuracy({ score, errorArr }),
     date: Date.now(),
+    accuracy,
     score
   };
   tapingSpeedData.push(data);

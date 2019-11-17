@@ -29,7 +29,6 @@ import {
 } from "./actions";
 import {
   checkInput,
-  calcAccuracy,
   saveResultLocalStorage,
   getOffsetTop
 } from "./utils";
@@ -47,7 +46,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const [accuracy, setAccuracy] = useState(100);
   const [state, dispatch] = useReducer(reducer, initState);
   const [offsetTop, setOffsetTop] = useState(0);
   const [toolTip, setToolTip] = useState({
@@ -67,7 +65,8 @@ function App() {
     timer,
     isTimerStarted,
     score,
-    dataChart
+    dataChart,
+    accuracy
   } = state;
 
   const handleChange = e => {
@@ -129,15 +128,13 @@ function App() {
 
   useEffect(() => {
     if (timer < 1 && score > 0) {
-      const data = saveResultLocalStorage({ score, errorArr });
+      const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
       updateDataChart(data, dispatch);
 
-      setAccuracy(calcAccuracy({ score, errorArr }));
-
       setOffsetTop(0);
     }
-  }, [score, errorArr, timer, setAccuracy]);
+  }, [score, accuracy, timer]);
   useEffect(() => {
     textBoxRef.current.scroll(0, 0);
   }, []);
@@ -193,8 +190,6 @@ function App() {
               <ButtonReload
                 onClick={() => {
                   reload(dispatch);
-
-                  setAccuracy(100);
                   textBoxRef.current.scroll({
                     top: 0,
                     left: 0,

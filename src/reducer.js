@@ -13,7 +13,7 @@ import {
   GET_NEW_TXT
 } from "./actions";
 
-import { formatDisplayTxt, formatTxt } from "./utils";
+import { formatDisplayTxt, formatTxt, calcAccuracy } from "./utils";
 import { initState } from "./store";
 import { getRandomWordList } from './wordList'
 
@@ -56,7 +56,9 @@ const reducer = (state, action) => {
     case START_TIMER:
       return { ...state, isTimerStarted: true };
     case GAME_OVER:
-      const x = state.cursor - state.errorArr.filter(el => el !== state.cursor).length
+      const x = state.cursor - state.errorArr.filter(el => el !== state.cursor).length;
+      const score = x > 0 ? x : 0;
+      const errorArr = state.errorArr.filter(el => el !== state.cursor);
       return {
         ...state,
         isTimerStarted: false,
@@ -65,8 +67,9 @@ const reducer = (state, action) => {
           ...state.displayText.slice(0, state.cursor),
           ...formatTxt(state.textArr).slice(state.cursor)
         ],
-        score: x > 0 ? x : 0,
-        errorArr: state.errorArr.filter(el => el !== state.cursor)
+        score,
+        errorArr,
+        accuracy: calcAccuracy({score, errorArr})
       };
     case UPDATE_DATA_CHART:
       return{...state, dataChart: [...state.dataChart, action.data]}
