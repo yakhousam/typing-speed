@@ -123,6 +123,7 @@ const MainPage = ({ setScore, setAccuracy, setTimer }) => {
       setScore(score);
       setAccuracy(calcAccuracy({ score, errorArr }));
       setTimer(timer);
+      setOffsetTop(0)
     }
   }, [score, errorArr, timer, setScore, setAccuracy, setTimer]);
   useEffect(() => {

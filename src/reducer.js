@@ -63,7 +63,7 @@ const reducer = (state, action) => {
         input: "",
         displayText: [
           ...state.displayText.slice(0, state.cursor),
-          ...formatTxt(state.textArr.slice(state.cursor))
+          ...formatTxt(state.textArr).slice(state.cursor)
         ],
         score: x > 0 ? x : 0,
         errorArr: state.errorArr.filter(el => el !== state.cursor)
