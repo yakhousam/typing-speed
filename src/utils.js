@@ -9,7 +9,17 @@ export const checkInput = (input = "", str = "") => {
 };
 
 export const formatTxt = wordList =>
-  wordList.map((word, i) => <Word  id={i} key={i}>{word}</Word>);
+  wordList.map((word, i) =>
+    i === 0 ? (
+      <Word id={i} selected key={i}>
+        {word}
+      </Word>
+    ) : (
+      <Word id={i} key={i}>
+        {word}
+      </Word>
+    )
+  );
 
 export const calcAccuracy = ({ score, errorArr }) => {
   const calc = 100 - (errorArr.length * 100) / (errorArr.length + score);
@@ -42,10 +52,13 @@ export const getDataLocalSorage = () => {
 };
 
 export const formatDisplayTxt = state => {
-  const { cursor, errorArr, input, textArr } = state;
+  console.log("format text ----");
+  let { cursor, errorArr, input, textArr } = state;
+  // console.log('format state =', state)
   if (cursor > textArr.length) return state.displayText;
   let currentWord;
   if (!input) {
+    console.log("input is empty", cursor);
     currentWord = (
       <Word
         errStyle={errorArr.includes(cursor)}
@@ -66,9 +79,7 @@ export const formatDisplayTxt = state => {
         id={cursor}
         className="last"
       >
-        <span
-          style={{ color: !errorArr.includes(cursor) ? "green" : "inherit" }}
-        >
+        <span style={{ color: !errorArr.includes(cursor) ? "green" : "" }}>
           {textArr[cursor].slice(0, input.length - 1)}
         </span>
         <Char errStyle={errorArr.includes(cursor)}>
@@ -102,7 +113,7 @@ export const formatDisplayTxt = state => {
         errStyle={errorArr.includes(cursor - 1)}
         isCorrect={!errorArr.includes(cursor - 1)}
         key={cursor - 1}
-        id={cursor -1}
+        id={cursor - 1}
       >
         {state.textArr[cursor - 1]}
       </Word>,
@@ -116,7 +127,7 @@ export const formatDisplayTxt = state => {
         errStyle={errorArr.includes(cursor - 1)}
         isCorrect={!errorArr.includes(cursor - 1)}
         key={cursor - 1}
-        id={cursor -1}
+        id={cursor - 1}
       >
         {state.textArr[cursor - 1]}
       </Word>
@@ -124,8 +135,8 @@ export const formatDisplayTxt = state => {
   }
 };
 
-export const getOffsetTop = (textBoxRef) => {
-  const nextWord = textBoxRef.current.querySelector(".last + span");
+export const getOffsetTop = textBoxRef => {
+  const nextWord = textBoxRef.current.querySelector(".last");
   if (nextWord) {
     return nextWord.offsetTop;
   } else {
