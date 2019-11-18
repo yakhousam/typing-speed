@@ -40,7 +40,9 @@ function TextBox(props) {
       ref={textBoxRef}
       height="5em"
       onMouseOut={() => {
-        updateToolTip({dispatch, toolTip:{ ...toolTip, txt: "", visible: false }});
+        if(toolTip.visible){
+          updateToolTip({dispatch, toolTip:{ ...toolTip, txt: "", visible: false }});
+        }
       }}
       onMouseOver={e => {
         const { id } = e.target;
