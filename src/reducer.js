@@ -54,7 +54,7 @@ const reducer = (state, action) => {
     case actionsTypes.UPDATE_DATA_CHART:
       return { ...state, dataChart: [...state.dataChart, action.data] };
     case actionsTypes.GET_NEW_TXT:     
-      return { ...state, ...action.update };
+      return { ...state, displayText: action.displayText, textArr: action.textArr, errorArr: [], errorArrTxt: [] };
     case actionsTypes.UPDATE_CURRENT_WORD_OFFSET:
       return { ...state, currentWordOffsetTop: action.offset };
     case actionsTypes.UPDATE_TOOLTIP:

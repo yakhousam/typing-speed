@@ -77,11 +77,11 @@ export const updateDataChart = ({ data, dispatch }) => {
 
 export const getNewTxt = ({ dispatch }) => {
   const wordList = getRandomWordList(200);
-  const update = {
-    displayText: formatTxt(wordList),
-    textArr: wordList
-  };
-  dispatch({ type: GET_NEW_TXT, update });
+  
+  const displayText = formatTxt(wordList);
+  const textArr = wordList;
+
+  dispatch({ type: GET_NEW_TXT, displayText, textArr });
 };
 export const updateCurrentWordOffset = ({ dispatch, offset }) => {
   dispatch({ type: UPDATE_CURRENT_WORD_OFFSET, offset });

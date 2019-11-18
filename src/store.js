@@ -10,7 +10,7 @@ export const initState = {
   errorArr: [],
   errorArrTxt: [],
   cursor: 0,
-  timer: 60,
+  timer: 5,
   isTimerStarted: false,
   score: 0,
   dataChart: [{ score: 0, accuracy: 0 }, ...getDataLocalSorage()],

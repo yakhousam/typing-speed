@@ -11,8 +11,7 @@ import {
   decTimer,
   gameOver,
   updateDataChart,
-  getNewTxt,
-  updateDisplayTxt
+  getNewTxt
 } from "./actions";
 import { saveResultLocalStorage } from "./utils";
 import { initState } from "./store";
@@ -73,10 +72,9 @@ const [timerInterval, settimerInterval] = useState()
           <button
             onClick={() => {
               getNewTxt({ dispatch, state });
-              updateDisplayTxt({ dispatch, state });
             }}
           >
-            New text
+            Get random text
           </button>
           <TextBox state={state} dispatch={dispatch} />
           <InputContainer state={state} dispatch={dispatch} />
