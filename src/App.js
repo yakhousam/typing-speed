@@ -45,29 +45,31 @@ function App() {
     accuracy
   } = state;  
 
-  useEffect(() => {
-    if (timer > 0) {
-      updateDisplayTxt(dispatch);
-    }
-  }, [cursor, errorArr, input, timer]);
+  
 
   useEffect(() => {
     if (timer > 0 && isTimerStarted) {
       const interval = setInterval(() => {
-        decTimer(dispatch);
+        decTimer({dispatch});
       }, 1000);
       return () => clearInterval(interval);
     }
     if (timer < 1 && isTimerStarted) {
-      gameOver(dispatch);
+      gameOver({dispatch, state});
     }
   }, [timer, isTimerStarted]);
+
+  useEffect(() => {
+    if (timer > 0) {
+      updateDisplayTxt({dispatch, state});
+    }
+  }, [cursor, errorArr, input, timer]);
 
   useEffect(() => {
     if (timer < 1 && score > 0) {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
-      updateDataChart(data, dispatch);
+      updateDataChart({data, dispatch});
     }
   }, [score, accuracy, timer]);
  
@@ -79,8 +81,8 @@ function App() {
         <Main>
           <button
             onClick={() => {
-              getNewTxt(dispatch);
-              updateDisplayTxt(dispatch);
+              getNewTxt({dispatch, state});
+              // updateDisplayTxt({dispatch, state});
             }}
           >
             New text

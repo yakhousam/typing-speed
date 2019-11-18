@@ -11,7 +11,7 @@ const InputContainer = ({ state, dispatch }) => {
       {state.timer < 1 && (
         <ButtonReload
           onClick={() => {
-            reload(dispatch);
+            reload({dispatch, state});
           }}
         />
       )}

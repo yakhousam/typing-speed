@@ -30,7 +30,7 @@ function TextBox(props) {
             behavior: "smooth"
           });
         }
-        updateCurrentWordOffset(dispatch, offset);
+        updateCurrentWordOffset({dispatch, offset});
       }
     }
   }, [input, currentWordOffsetTop, dispatch]);
@@ -40,30 +40,30 @@ function TextBox(props) {
       ref={textBoxRef}
       height="5em"
       onMouseOut={() => {
-        updateToolTip(dispatch, { ...toolTip, txt: "", visible: false });
+        updateToolTip({dispatch, toolTip:{ ...toolTip, txt: "", visible: false }});
       }}
       onMouseOver={e => {
         const { id } = e.target;
         const error = errorArrTxt.find(el => el.id === +id);
         if (error) {
-          updateToolTip(dispatch, {
+          updateToolTip({dispatch,toolTip: {
             ...toolTip,
             visible: true,
             txt: error.input
-          });
+          }});
         } else if (errorArr.includes(+id)) { 
-          updateToolTip(dispatch, {
+          updateToolTip({dispatch, toolTip:{
             ...toolTip,
             visible: true,
             txt: ""
-          });
+          }});
         }
       }}
       onMouseMove={e => {
         const left = e.clientX;
         const top = e.clientY;
         if (toolTip.visible) {
-          updateToolTip(dispatch, { ...toolTip, left, top });
+          updateToolTip({dispatch, toolTip: { ...toolTip, left, top }});
         }
       }}
     >

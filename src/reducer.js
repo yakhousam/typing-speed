@@ -1,94 +1,62 @@
-import {
-  SET_INPUT,
-  UPDATE_DISPLAY_TXT,
-  INC_CURSOR,
-  ADD_ERROR,
-  ADD_ERROR_TXT,
-  REMOVE_ERROR,
-  RELOAD,
-  DEC_TIMER,
-  START_TIMER,
-  GAME_OVER,
-  UPDATE_DATA_CHART,
-  GET_NEW_TXT,
-  UPDATE_CURRENT_WORD_OFFSET,
-  UPDATE_TOOLTIP
-} from "./actions";
+import * as actionsTypes from "./actions";
 
-import { formatDisplayTxt, formatTxt, calcAccuracy } from "./utils";
 import { initState } from "./store";
-import { getRandomWordList } from "./wordList";
 
 const reducer = (state, action) => {
-  if (action.type === GAME_OVER) {
+  if (action.type === actionsTypes.GAME_OVER) {
     console.log(state);
   }
   //  console.log(action.type);
   // if(![DEC_TIMER, UPDATE_DISPLAY_TXT, SET_INPUT].includes(action.type)){
   // }
   switch (action.type) {
-    case SET_INPUT:
+    case actionsTypes.SET_INPUT:
       return { ...state, input: action.input };
-    case UPDATE_DISPLAY_TXT:
+    case actionsTypes.UPDATE_DISPLAY_TXT:
       return {
         ...state,
-        displayText: formatDisplayTxt(state)
+        ...action.update
       };
-    case ADD_ERROR:
+    case actionsTypes.ADD_ERROR:
       return {
         ...state,
-        errorArr: [...state.errorArr, state.cursor]
+        errorArr: [...state.errorArr, action.error]
       };
-    case REMOVE_ERROR:
+    case actionsTypes.REMOVE_ERROR:
       return {
         ...state,
-        errorArr: state.errorArr.filter(el => el !== state.cursor)
+        errorArr: [...action.newErrorArr]
       };
-    case ADD_ERROR_TXT:
+    case actionsTypes.ADD_ERROR_TXT:
       return {
         ...state,
         errorArrTxt: [...state.errorArrTxt, action.error]
       };
-    case INC_CURSOR:
+    case actionsTypes.INC_CURSOR:
       return { ...state, cursor: state.cursor + 1 };
-    case RELOAD:
+    case actionsTypes.RELOAD:
       return {
         ...initState,
-        displayText: formatTxt(state.textArr),
+        displayText: action.displayText,
         textArr: [...state.textArr],
         dataChart: [...state.dataChart]
       };
-    case DEC_TIMER:
+    case actionsTypes.DEC_TIMER:
       return { ...state, timer: state.timer - 1 };
-    case START_TIMER:
+    case actionsTypes.START_TIMER:
       return { ...state, isTimerStarted: true };
-    case GAME_OVER:
-      const x =
-        state.cursor - state.errorArr.filter(el => el !== state.cursor).length;
-      const score = x > 0 ? x : 0;
-      const errorArr = state.errorArr.filter(el => el !== state.cursor);
+    case actionsTypes.GAME_OVER:
       return {
         ...state,
-        cursor: 0,
-        isTimerStarted: false,
-        currentWordOffsetTop: 0,
-        input: "",
-        displayText: [
-          ...state.displayText.slice(0, state.cursor),
-          ...formatTxt(state.textArr).slice(state.cursor)
-        ],
-        score,
-        errorArr,
-        accuracy: calcAccuracy({ score, errorArr })
+        ...action.update
       };
-    case UPDATE_DATA_CHART:
+    case actionsTypes.UPDATE_DATA_CHART:
       return { ...state, dataChart: [...state.dataChart, action.data] };
-    case GET_NEW_TXT:
-      const wordList = getRandomWordList(200);
-      return { ...state, displayText: formatTxt(wordList), textArr: wordList };
-    case UPDATE_CURRENT_WORD_OFFSET:
+    case actionsTypes.GET_NEW_TXT:     
+      return { ...state, ...action.update };
+    case actionsTypes.UPDATE_CURRENT_WORD_OFFSET:
       return { ...state, currentWordOffsetTop: action.offset };
-    case UPDATE_TOOLTIP:
+    case actionsTypes.UPDATE_TOOLTIP:
       return { ...state, toolTip: { ...state.toolTip, ...action.toolTip } };
 
     default:

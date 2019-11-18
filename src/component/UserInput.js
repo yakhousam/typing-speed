@@ -25,26 +25,26 @@ const UserInput = (props) =>  {
       return;
     }
     if (!isTimerStarted && timer > 0) {
-      startTimer(true, dispatch);
+      startTimer({start: true, dispatch});
     }
     let input = e.target.value;
     if (!checkInput(input, textArr[cursor])) {
       if (!errorArr.includes(cursor)) {
-        addError(dispatch, input);
+        addError({dispatch, error: cursor});
       }
     } else {
       if (errorArr.includes(cursor)) {
-        removeError(dispatch);
+        removeError({dispatch, errorArr, error: cursor});
       }
     }
     if (input.endsWith(" ")) {
       if (errorArr.includes(cursor)) {
-        addErrorTxt(dispatch, { id: cursor, input });
+        addErrorTxt({dispatch, error: { id: cursor, input }});
       }
-      incrementCursor(dispatch);
+      incrementCursor({dispatch});
       input = "";
     }
-    setInput(input, dispatch);
+    setInput({input, dispatch});
   };
   return <StyledInput type="text" autoFocus value={input} onChange={handleChange} />;
 }

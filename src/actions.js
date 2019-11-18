@@ -1,3 +1,6 @@
+import { formatTxt, calcAccuracy, formatDisplayTxt } from "./utils";
+import {getRandomWordList} from './wordList'
+
 export const SET_INPUT = "SET_INPUT";
 export const UPDATE_DISPLAY_TXT = "UPDATE_DISPLAY_TXT";
 export const INC_CURSOR = "INC_CURSOR";
@@ -10,53 +13,79 @@ export const DEC_TIMER = "DEC_TIMER";
 export const GAME_OVER = "GAME_OVER";
 export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART";
 export const GET_NEW_TXT = "GET_NEW_TXT";
-export const UPDATE_CURRENT_WORD_OFFSET = "UPDATE_CURRENT_WORD_OFFSET"
-export const UPDATE_TOOLTIP = "UPDATE_TOOLTIP"
+export const UPDATE_CURRENT_WORD_OFFSET = "UPDATE_CURRENT_WORD_OFFSET";
+export const UPDATE_TOOLTIP = "UPDATE_TOOLTIP";
 
-export const setInput = (input, dispatch) => {
+export const setInput = ({ input, dispatch }) => {
   dispatch({ type: SET_INPUT, input });
 };
-export const updateDisplayTxt = dispatch => {
-  dispatch({ type: UPDATE_DISPLAY_TXT });
+export const updateDisplayTxt = ({ dispatch, state }) => {
+  const displayText = formatDisplayTxt(state);
+  const update = { displayText };
+  dispatch({ type: UPDATE_DISPLAY_TXT, update });
 };
-export const incrementCursor = dispatch => {
+export const incrementCursor = ({ dispatch }) => {
   dispatch({ type: INC_CURSOR });
 };
 
-export const addError = (dispatch, input) => {
-  dispatch({ type: ADD_ERROR, input });
+export const addError = ({ dispatch, error }) => {
+  dispatch({ type: ADD_ERROR, error });
 };
-export const addErrorTxt = (dispatch, error) => {
+export const addErrorTxt = ({ dispatch, error }) => {
   dispatch({ type: ADD_ERROR_TXT, error });
 };
 
-export const removeError = dispatch => {
-  dispatch({ type: REMOVE_ERROR });
+export const removeError = ({ dispatch, errorArr, error }) => {
+  const newErrorArr = errorArr.filter(el => el !== error);
+  dispatch({ type: REMOVE_ERROR, newErrorArr });
 };
-export const reload = dispatch => {
-  dispatch({ type: RELOAD });
+export const reload = ({ dispatch, state }) => {
+  const displayText = formatTxt(state.textArr);
+  dispatch({ type: RELOAD, displayText });
 };
-export const startTimer = (start, dispatch) => {
+export const startTimer = ({ start, dispatch }) => {
   dispatch({ type: START_TIMER, start });
 };
 
-export const decTimer = dispatch => {
+export const decTimer = ({ dispatch }) => {
   dispatch({ type: DEC_TIMER });
 };
-export const gameOver = dispatch => {
-  dispatch({ type: GAME_OVER });
+export const gameOver = ({ dispatch, state }) => {
+  const x =
+    state.cursor - state.errorArr.filter(el => el !== state.cursor).length;
+  const score = x > 0 ? x : 0;
+  const errorArr = state.errorArr.filter(el => el !== state.cursor);
+  const accuracy = calcAccuracy({ score, errorArr });
+  const update = {
+    cursor: 0,
+    isTimerStarted: false,
+    currentWordOffsetTop: 0,
+    input: "",
+    displayText: [
+      ...state.displayText.slice(0, state.cursor),
+      ...formatTxt(state.textArr).slice(state.cursor)
+    ],
+    score,
+    errorArr,
+    accuracy
+  };
+  dispatch({ type: GAME_OVER, update });
 };
-export const updateDataChart = (data, dispatch) => {
+export const updateDataChart = ({ data, dispatch }) => {
   dispatch({ type: UPDATE_DATA_CHART, data });
 };
 
-export const getNewTxt = dispatch => {
-  dispatch({ type: GET_NEW_TXT });
+export const getNewTxt = ({ dispatch }) => {
+  const wordList = getRandomWordList(200);
+  const update = {
+    displayText: formatTxt(wordList),
+    textArr: wordList
+  };
+  dispatch({ type: GET_NEW_TXT, update });
 };
-export const updateCurrentWordOffset = (dispatch, offset) => {
+export const updateCurrentWordOffset = ({ dispatch, offset }) => {
   dispatch({ type: UPDATE_CURRENT_WORD_OFFSET, offset });
 };
-export const updateToolTip = (dispatch, toolTip) =>{
-  dispatch({type: UPDATE_TOOLTIP, toolTip})
-}
-
+export const updateToolTip = ({ dispatch, toolTip }) => {
+  dispatch({ type: UPDATE_TOOLTIP, toolTip });
+};
