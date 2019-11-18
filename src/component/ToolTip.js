@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const ToolTip = (props ) => {
-  return <StyledToolTip {...props}>{props.txt || '" "'}</StyledToolTip>;
+  return <StyledToolTip {...props}>
+    {props.txt !== ' ' ? props.txt : '" "'}
+  </StyledToolTip>;
 };
 
 const StyledToolTip = styled.div`
