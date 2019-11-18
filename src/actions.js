@@ -21,8 +21,7 @@ export const setInput = ({ input, dispatch }) => {
 };
 export const updateDisplayTxt = ({ dispatch, state }) => {
   const displayText = formatDisplayTxt(state);
-  const update = { displayText };
-  dispatch({ type: UPDATE_DISPLAY_TXT, update });
+  dispatch({ type: UPDATE_DISPLAY_TXT, update :{ errorArr: state.errorArr, displayText }});
 };
 export const incrementCursor = ({ dispatch }) => {
   dispatch({ type: INC_CURSOR });
@@ -65,6 +64,7 @@ export const gameOver = ({ dispatch, state }) => {
       ...state.displayText.slice(0, state.cursor),
       ...formatTxt(state.textArr).slice(state.cursor)
     ],
+    timer: 0,
     score,
     errorArr,
     accuracy
