@@ -3,10 +3,11 @@ import styled from "styled-components";
 import {
   setInput,
   incrementCursor,
-  addError,
   addErrorTxt,
-  removeError,
-  startTimer
+  // addError,
+  // removeError,
+  startTimer,
+  updateDisplayTxt
 } from "../actions";
 import { checkInput } from "../utils";
 
@@ -21,6 +22,8 @@ const UserInput = (props) =>  {
     errorArr
   } = props.state;
   const handleChange = e => {
+    let newErroArr = [...errorArr]
+    let newCursor = cursor
     if (timer < 1 || cursor > textArr.length - 1) {
       return;
     }
@@ -28,23 +31,34 @@ const UserInput = (props) =>  {
       startTimer({start: true, dispatch});
     }
     let input = e.target.value;
+    console.log('input =', input)
     if (!checkInput(input, textArr[cursor])) {
       if (!errorArr.includes(cursor)) {
-        addError({dispatch, error: cursor});
+        // addError({dispatch, error: cursor});
+        newErroArr.push(cursor)
       }
     } else {
       if (errorArr.includes(cursor)) {
-        removeError({dispatch, errorArr, error: cursor});
+        // removeError({dispatch, errorArr, error: cursor});
+        newErroArr = newErroArr.filter(err => err !== cursor)
       }
     }
     if (input.endsWith(" ")) {
-      if (errorArr.includes(cursor)) {
+      if (newErroArr.includes(cursor)) {
         addErrorTxt({dispatch, error: { id: cursor, input }});
       }
       incrementCursor({dispatch});
       input = "";
+      newCursor++
     }
-    setInput({input, dispatch});
+    setInput({input, dispatch, });
+    updateDisplayTxt({dispatch, state: {
+      ...props.state, 
+      input,
+      errorArr: [...newErroArr],
+      cursor: newCursor
+    }})
+    
   };
   return <StyledInput type="text" autoFocus value={input} onChange={handleChange} />;
 }
