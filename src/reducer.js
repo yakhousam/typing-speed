@@ -6,12 +6,13 @@ const reducer = (state, action) => {
   if (action.type === actionsTypes.GAME_OVER) {
     console.log(state);
   }
-  //  console.log(action.type);
-  // if(![DEC_TIMER, UPDATE_DISPLAY_TXT, SET_INPUT].includes(action.type)){
-  // }
+  if(![actionsTypes.DEC_TIMER].includes(action.type)){
+    //  console.log(state)
+     console.log(action.type);
+    }
   switch (action.type) {
     case actionsTypes.SET_INPUT:
-      return { ...state, input: action.input };
+      return { ...state, input: action.input};
     case actionsTypes.UPDATE_DISPLAY_TXT:
       return {
         ...state,

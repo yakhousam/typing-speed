@@ -1,24 +1,20 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import SideBare from "./component/SideBare";
 import Chart from "./component/Chart";
-import TextBox from './component/TextBox'
-import ToolTip from './component/ToolTip'
-import InputContainer from './component/InputContainer'
-import {
-  Grid,
-  Main,
-  ChartsContainer,
-} from "./component/styledComponents";
+import TextBox from "./component/TextBox";
+import ToolTip from "./component/ToolTip";
+import InputContainer from "./component/InputContainer";
+import { Grid, Main, ChartsContainer } from "./component/styledComponents";
 
 import {
-  updateDisplayTxt,
   decTimer,
   gameOver,
   updateDataChart,
-  getNewTxt
+  getNewTxt,
+  updateDisplayTxt
 } from "./actions";
-import {  saveResultLocalStorage } from "./utils";
+import { saveResultLocalStorage } from "./utils";
 import { initState } from "./store";
 import reducer from "./reducer";
 
@@ -35,44 +31,39 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const [state, dispatch] = useReducer(reducer, initState);
   const {
-    input,
-    cursor,
-    errorArr,
     timer,
     isTimerStarted,
     score,
     dataChart,
     accuracy
-  } = state;  
+  } = state;
 
-  
 
+const [timerInterval, settimerInterval] = useState()
   useEffect(() => {
-    if (timer > 0 && isTimerStarted) {
+    if (timer > 0 && isTimerStarted && !timerInterval) {
       const interval = setInterval(() => {
-        decTimer({dispatch});
+        decTimer({ dispatch });
       }, 1000);
-      return () => clearInterval(interval);
+      settimerInterval(interval)
     }
     if (timer < 1 && isTimerStarted) {
-      gameOver({dispatch, state});
+      clearInterval(timerInterval)
+      settimerInterval(undefined)
+      gameOver({ dispatch, state });
     }
-  }, [timer, isTimerStarted]);
+  }, [timer, isTimerStarted, timerInterval, state ]);
 
-  useEffect(() => {
-    if (timer > 0) {
-      updateDisplayTxt({dispatch, state});
-    }
-  }, [cursor, errorArr, input, timer]);
+  
 
   useEffect(() => {
     if (timer < 1 && score > 0) {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
-      updateDataChart({data, dispatch});
+      updateDataChart({ data, dispatch });
     }
   }, [score, accuracy, timer]);
- 
+
   return (
     <>
       <GlobalStyle />
@@ -81,27 +72,27 @@ function App() {
         <Main>
           <button
             onClick={() => {
-              getNewTxt({dispatch, state});
-              // updateDisplayTxt({dispatch, state});
+              getNewTxt({ dispatch, state });
+              updateDisplayTxt({ dispatch, state });
             }}
           >
             New text
           </button>
-          <TextBox  state={state} dispatch={dispatch} />
+          <TextBox state={state} dispatch={dispatch} />
           <InputContainer state={state} dispatch={dispatch} />
         </Main>
-        
-          <ChartsContainer>
-            <Chart
-              title="WPM"
-              data={dataChart.map(d => ({ date: d.date, value: d.score }))}
-            />
-            <Chart
-              title="Accuracy"
-              data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
-            />
-          </ChartsContainer>
-        
+
+        <ChartsContainer>
+          <Chart
+            title="WPM"
+            data={dataChart.map(d => ({ date: d.date, value: d.score }))}
+          />
+          <Chart
+            title="Accuracy"
+            data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
+          />
+        </ChartsContainer>
+
         <ToolTip {...state.toolTip} />
       </Grid>
     </>
