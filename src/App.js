@@ -71,12 +71,12 @@ function App() {
 
   useEffect(() => {
     // save user progress on localstorage
-    if (timer < 1 && score > 0) {
+    if (timer < 1 && score > 0 && !isTimerStarted ) {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
       updateDataChart({ data, dispatch });
     }
-  }, [score, accuracy, timer]);
+  }, [score, accuracy, timer, isTimerStarted]);
 
   return (
     <>
