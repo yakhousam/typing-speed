@@ -68,6 +68,11 @@ const StyledInput = styled.input`
   with: 400px;
   height: 3em;
   font-size: 22px;
+  border: none;
+  border-bottom: thin solid green;
+  background: none;
+  text-align: center;
+  padding-top: 1em;
 `;
 
 export default UserInput;
