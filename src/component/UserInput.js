@@ -65,7 +65,7 @@ const UserInput = (props) =>  {
 
 const StyledInput = styled.input`
   font-weight: bold;
-  with: 400px;
+  width: 400px;
   height: 3em;
   font-size: 22px;
   border: none;

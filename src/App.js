@@ -11,7 +11,8 @@ import {
   decTimer,
   gameOver,
   updateDataChart,
-  getNewTxt
+  getNewTxt,
+  updateScore
 } from "./actions";
 import { saveResultLocalStorage } from "./utils";
 import { initState } from "./store";
@@ -29,32 +30,31 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initState);
-  const {
-    timer,
-    isTimerStarted,
-    score,
-    dataChart,
-    accuracy
-  } = state;
+  const { timer, isTimerStarted, score, dataChart, accuracy } = state;
+  function fnScore() {
+    updateScore({ dispatch, state });
+  }
 
-
-const [timerInterval, settimerInterval] = useState()
+  const [timerInterval, settimerInterval] = useState();
   useEffect(() => {
+    if( timer > 0 ){
+      fnScore()
+    }
     if (timer > 0 && isTimerStarted && !timerInterval) {
       const interval = setInterval(() => {
         decTimer({ dispatch });
       }, 1000);
-      settimerInterval(interval)
+      settimerInterval(interval);
     }
     if (timer < 1 && isTimerStarted) {
-      clearInterval(timerInterval)
-      settimerInterval(undefined)
+      clearInterval(timerInterval);
+      settimerInterval(undefined);
       gameOver({ dispatch, state });
     }
-  }, [timer, isTimerStarted, timerInterval, state ]);
+  
+  }, [timer, isTimerStarted, timerInterval]);
 
   
-
   useEffect(() => {
     if (timer < 1 && score > 0) {
       const data = saveResultLocalStorage({ score, accuracy });
