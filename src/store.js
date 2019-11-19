@@ -13,7 +13,7 @@ export const initState = {
   timer: 15,
   isTimerStarted: false,
   score: 0,
-  dataChart: [{ score: 0, accuracy: 0 }, ...getDataLocalSorage()],
+  dataChart: [ ...getDataLocalSorage()],
   accuracy: 100,
   currentWordOffsetTop: 0,
   toolTip: {
