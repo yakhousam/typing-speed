@@ -12,7 +12,10 @@ export const formatTxt = wordList =>
   wordList.map((word, i) =>
     i === 0 ? (
       <Word id={i} selected key={i}>
-        {word}
+         <Char >
+          {word.charAt(0)}
+        </Char>
+        {word.slice(1)}
       </Word>
     ) : (
       <Word id={i} key={i}>
@@ -67,7 +70,10 @@ export const formatDisplayTxt = state => {
         id={cursor}
         className="last"
       >
-        {textArr[cursor]}
+        <Char >
+          {textArr[cursor].charAt(0)}
+        </Char>
+        {textArr[cursor].slice(1)}
       </Word>
     );
   } else {
@@ -80,12 +86,12 @@ export const formatDisplayTxt = state => {
         className="last"
       >
         <span style={{ color: !errorArr.includes(cursor) ? "green" : "" }}>
-          {textArr[cursor].slice(0, input.length - 1)}
+          {textArr[cursor].slice(0, input.length )}
         </span>
-        <Char errStyle={errorArr.includes(cursor)}>
-          {textArr[cursor].charAt(input.length - 1)}
+        <Char >
+          {textArr[cursor].charAt(input.length )}
         </Char>
-        {textArr[cursor].slice(input.length)}
+        {textArr[cursor].slice(input.length + 1)}
       </Word>
     );
   }

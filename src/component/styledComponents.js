@@ -63,11 +63,12 @@ export const Word = styled.span`
 
 export const Char = styled.span`
   font-weight: bold;
+  text-decoration: underline;
   color: ${props => {
     if (props.errStyle) {
       return "red";
     }else{
-      return "green";
+      return "";
     }
   }};
 `;
