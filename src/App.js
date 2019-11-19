@@ -14,7 +14,7 @@ import {
   getNewTxt,
   updateScore
 } from "./actions";
-import { saveResultLocalStorage } from "./utils";
+import { saveResultLocalStorage, calcAccuracy } from "./utils";
 import { initState } from "./store";
 import reducer from "./reducer";
 
@@ -30,16 +30,19 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initState);
-  const { timer, isTimerStarted, score, dataChart, accuracy } = state;
-  function fnScore() {
-    updateScore({ dispatch, state });
-  }
+  const {
+    timer,
+    isTimerStarted,
+    score,
+    dataChart,
+    accuracy,
+    cursor,
+    errorArr
+  } = state;
 
   const [timerInterval, settimerInterval] = useState();
   useEffect(() => {
-    if( timer > 0 ){
-      fnScore()
-    }
+    // decrement timer and call gameOver when timer=0
     if (timer > 0 && isTimerStarted && !timerInterval) {
       const interval = setInterval(() => {
         decTimer({ dispatch });
@@ -51,11 +54,23 @@ function App() {
       settimerInterval(undefined);
       gameOver({ dispatch, state });
     }
-  
-  }, [timer, isTimerStarted, timerInterval]);
+  }, [timer, isTimerStarted, timerInterval, state]);
 
-  
   useEffect(() => {
+    // update score and accuracy
+    if (timer > 0) {
+      const words = cursor - errorArr.filter(el => el !== cursor).length;
+      const wpm =
+        words > 0 && timer < 15
+          ? (words * initState.timer) / (initState.timer - timer)
+          : 0;
+      const accuracy = calcAccuracy({ score: words, errorArr: errorArr });
+      updateScore({ dispatch, accuracy, score: wpm.toFixed(0) });
+    }
+  }, [cursor, errorArr, timer]);
+
+  useEffect(() => {
+    // save user progress on localstorage
     if (timer < 1 && score > 0) {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);

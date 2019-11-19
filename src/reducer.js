@@ -59,9 +59,9 @@ const reducer = (state, action) => {
       return { ...state, currentWordOffsetTop: action.offset };
     case actionsTypes.UPDATE_TOOLTIP:
       return { ...state, toolTip: { ...state.toolTip, ...action.toolTip } };
-    case actionsTypes.UPDATE_SCORE: {
+    case actionsTypes.UPDATE_SCORE: 
       return { ...state, score: action.score, accuracy: action.accuracy}
-    }
+    
 
     default:
       return state;
