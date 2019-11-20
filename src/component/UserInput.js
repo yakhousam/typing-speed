@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {
   setInput,
@@ -58,9 +58,22 @@ const UserInput = (props) =>  {
       errorArr: [...newErroArr],
       cursor: newCursor
     }})
-    
   };
-  return <StyledInput type="text" autoFocus value={input} onChange={handleChange} />;
+  const [isFocus, setIsFocus] = useState(false)
+  return <StyledInput 
+  type="text" 
+  placeholder={!isFocus && timer > 0 ? "Type your text here...!" : ''}
+  autoFocus 
+  value={input} 
+  onChange={handleChange} 
+  onFocus={() => {
+    setIsFocus(true)
+  }}
+  onBlur={() => {
+    setIsFocus(false)
+  } }
+  isFocus={isFocus}
+  />;
 }
 
 const StyledInput = styled.input`
@@ -68,11 +81,16 @@ const StyledInput = styled.input`
   width: 400px;
   height: 3em;
   font-size: 22px;
-  border: none;
-  border-bottom: thin solid green;
   background: none;
   text-align: center;
   padding-top: 1em;
+  
+  ${props => props.isFocus ? `
+    border: none;
+    border-bottom: thin solid green;
+  ` : `
+    border: thin dashed green;
+  `}
 `;
 
 export default UserInput;

@@ -56,8 +56,7 @@ export const getDataLocalSorage = () => {
 
 export const formatDisplayTxt = state => {
   console.log("format text ----");
-  let { cursor, errorArr, input, textArr } = state;
-  // console.log('format state =', state)
+  const { cursor, errorArr, input, textArr } = state;
   if (cursor > textArr.length) return state.displayText;
   let currentWord;
   if (!input) {
