@@ -6,13 +6,13 @@ const reducer = (state, action) => {
   if (action.type === actionsTypes.GAME_OVER) {
     console.log(state);
   }
-  if(![actionsTypes.DEC_TIMER].includes(action.type)){
+  if (![actionsTypes.DEC_TIMER].includes(action.type)) {
     //  console.log(state)
-     console.log(action.type);
-    }
+    console.log(action.type);
+  }
   switch (action.type) {
     case actionsTypes.SET_INPUT:
-      return { ...state, input: action.input};
+      return { ...state, input: action.input };
     case actionsTypes.UPDATE_DISPLAY_TXT:
       return {
         ...state,
@@ -53,17 +53,21 @@ const reducer = (state, action) => {
       };
     case actionsTypes.UPDATE_DATA_CHART:
       return { ...state, dataChart: [...state.dataChart, action.data] };
-    case actionsTypes.GET_NEW_TXT:     
-      return { ...state, displayText: action.displayText, textArr: action.textArr, errorArr: [], errorArrTxt: [] };
+    case actionsTypes.GET_NEW_TXT:
+      return {
+        ...initState,
+        displayText: action.displayText,
+        textArr: action.textArr,
+        dataChart: [...state.dataChart]
+      };
     case actionsTypes.UPDATE_CURRENT_WORD_OFFSET:
       return { ...state, currentWordOffsetTop: action.offset };
     case actionsTypes.UPDATE_TOOLTIP:
       return { ...state, toolTip: { ...state.toolTip, ...action.toolTip } };
-    case actionsTypes.UPDATE_SCORE: 
-      return { ...state, score: action.score, accuracy: action.accuracy}
+    case actionsTypes.UPDATE_SCORE:
+      return { ...state, score: action.score, accuracy: action.accuracy };
     case actionsTypes.UPDATE_INTERVAL:
-      return {...state, interval: action.interval}
-    
+      return { ...state, interval: action.interval };
 
     default:
       return state;

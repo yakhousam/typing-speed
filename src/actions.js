@@ -79,11 +79,9 @@ export const updateDataChart = ({ data, dispatch }) => {
 };
 
 export const getNewTxt = ({ dispatch }) => {
-  const wordList = getRandomWordList(200);
-  
+  const wordList = getRandomWordList(200);  
   const displayText = formatTxt(wordList);
   const textArr = wordList;
-
   dispatch({ type: GET_NEW_TXT, displayText, textArr });
 };
 export const updateCurrentWordOffset = ({ dispatch, offset }) => {

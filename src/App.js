@@ -89,6 +89,7 @@ function App() {
         <Main>
           <button
             onClick={() => {
+              clearInterval(interval)
               getNewTxt({ dispatch, state });
             }}
           >
