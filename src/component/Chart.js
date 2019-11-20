@@ -70,6 +70,23 @@ const Chart = ({ data, title }) => {
       .style("fill","orange")
       .text(title);
 
+      svg
+      .selectAll("circle")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("stroke", "#6de576")
+      .attr("fill", "#6de576")
+      .attr("cx", function(d, i) {
+        return x(i);
+      })
+      .attr("cy", function(d) {
+        return y(d.value);
+      })
+      .attr("r", 3)
+      .append('title')
+      .text(d => d.value)
+
 
   }, [data, title]);
 
