@@ -7,7 +7,7 @@ import reloadImg from "./reload.png";
 const InputContainer = ({ state, dispatch }) => {
   return (
     <Section>
-      <UserInput state={state} dispatch={dispatch} />
+     {state.timer > 0 && <UserInput state={state} dispatch={dispatch} />}
       {state.timer < 1 && (
         <ButtonReload
           onClick={() => {

@@ -77,6 +77,7 @@ function App() {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
       updateDataChart({ data, dispatch });
+      console.log(state)
     }
   }, [score, accuracy, timer, isTimerStarted]);
 
