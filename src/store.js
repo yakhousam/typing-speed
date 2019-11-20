@@ -21,5 +21,6 @@ export const initState = {
     top: 0,
     left: 0,
     txt: ""
-  }
+  },
+  interval: undefined
 };

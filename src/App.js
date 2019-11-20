@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect } from "react";
 import { createGlobalStyle } from "styled-components";
 import SideBare from "./component/SideBare";
 import Chart from "./component/Chart";
@@ -12,7 +12,8 @@ import {
   gameOver,
   updateDataChart,
   getNewTxt,
-  updateScore
+  updateScore,
+  updateInterval
 } from "./actions";
 import { saveResultLocalStorage, calcAccuracy } from "./utils";
 import { initState } from "./store";
@@ -37,24 +38,25 @@ function App() {
     dataChart,
     accuracy,
     cursor,
-    errorArr
+    errorArr,
+    interval
   } = state;
 
-  const [timerInterval, settimerInterval] = useState();
+  
   useEffect(() => {
     // decrement timer and call gameOver when timer=0
-    if (timer > 0 && isTimerStarted && !timerInterval) {
-      const interval = setInterval(() => {
+    if (timer > 0 && isTimerStarted && !interval) {
+      const timerInterval = setInterval(() => {
         decTimer({ dispatch });
       }, 1000);
-      settimerInterval(interval);
+      updateInterval({dispatch, interval: timerInterval});
     }
     if (timer < 1 && isTimerStarted) {
-      clearInterval(timerInterval);
-      settimerInterval(undefined);
+      clearInterval(interval);
+      updateInterval({dispatch ,interval: undefined});
       gameOver({ dispatch, state });
     }
-  }, [timer, isTimerStarted, timerInterval, state]);
+  }, [timer, isTimerStarted, interval, state]);
 
   useEffect(() => {
     // update score and accuracy
@@ -70,7 +72,7 @@ function App() {
   }, [cursor, errorArr, timer]);
 
   useEffect(() => {
-    // save user progress on localstorage
+    // save user progress in localstorage
     if (timer < 1 && score > 0 && !isTimerStarted ) {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);

@@ -17,6 +17,7 @@ export const GET_NEW_TXT = "GET_NEW_TXT";
 export const UPDATE_CURRENT_WORD_OFFSET = "UPDATE_CURRENT_WORD_OFFSET";
 export const UPDATE_TOOLTIP = "UPDATE_TOOLTIP";
 export const UPDATE_SCORE = "UPDATE_SCORE"
+export const UPDATE_INTERVAL = "UPDATE_INTERVAL"
 
 export const setInput = ({ input, dispatch }) => {
   dispatch({ type: SET_INPUT, input });
@@ -95,3 +96,8 @@ export const updateScore = ({dispatch, accuracy, score}) => {
   dispatch({ type: UPDATE_SCORE, accuracy, score})
   
 }
+
+export const updateInterval = ({dispatch, interval}) => {
+  dispatch({type: UPDATE_INTERVAL, interval})
+}
+

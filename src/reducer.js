@@ -61,6 +61,8 @@ const reducer = (state, action) => {
       return { ...state, toolTip: { ...state.toolTip, ...action.toolTip } };
     case actionsTypes.UPDATE_SCORE: 
       return { ...state, score: action.score, accuracy: action.accuracy}
+    case actionsTypes.UPDATE_INTERVAL:
+      return {...state, interval: action.interval}
     
 
     default:
