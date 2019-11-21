@@ -47,7 +47,6 @@ export const Timer = styled.span`
 `
 
 export const Word = styled.span`
-
   padding: 0 .2em;
   background-color: ${props => (props.selected ? "rgba(0,0,0,0.1)" : "unset")};
   color: ${props => {
