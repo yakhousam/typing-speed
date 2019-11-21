@@ -1,5 +1,5 @@
 # Description
-Test you speed tapping
+Test you speed typing
 ---
 
 ## Deployement  
