@@ -62,7 +62,7 @@ function App() {
     if (timer > 0) {
       const words = cursor - errorArr.filter(el => el !== cursor).length;
       const wpm =
-        words > 0 && timer < 15
+        words > 0 && timer < initState.timer
           ? (words * initState.timer) / (initState.timer - timer)
           : 0;
       const accuracy = calcAccuracy({ score: words, errorArr: errorArr });
@@ -76,7 +76,6 @@ function App() {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
       updateDataChart({ data, dispatch });
-      console.log(state)
     }
   }, [score, accuracy, timer, isTimerStarted]);
 
