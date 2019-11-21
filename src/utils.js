@@ -26,7 +26,7 @@ export const formatTxt = wordList =>
 
 export const calcAccuracy = ({ score, errorArr }) => {
   const calc = 100 - (errorArr.length * 100) / (errorArr.length + score);
-  return calc ? calc.toFixed(0) : 0;
+  return calc ? calc.toFixed(0) : 100;
 };
 
 export const saveResultLocalStorage = ({ score, accuracy }) => {
