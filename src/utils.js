@@ -57,7 +57,7 @@ export const getDataLocalSorage = () => {
 export const formatDisplayTxt = state => {
   console.log("format text ----");
   const { cursor, errorArr, input, textArr } = state;
-  if (cursor > textArr.length) return state.displayText;
+  if (cursor > textArr.length -1) return state.displayText;
   let currentWord;
   if (!input) {
     console.log("input is empty", cursor);
