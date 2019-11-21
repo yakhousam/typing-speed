@@ -31,7 +31,8 @@ export const StyledTextBox = styled.div`
 
   overflow: auto;
   background: #eeeff8;
- border:  solid thin black
+ border:  solid thin black;
+ align-content: start;
   
 `;
 

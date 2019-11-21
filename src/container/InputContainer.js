@@ -61,19 +61,21 @@ const Section = styled.section`
 
 const ButtonReload = styled(Button)`
   text-transform: uppercase;
+  margin: auto;
 `;
 
 const ToggleButton = styled.div`
   width: 150px;
   height: 2em;
   font-size: 16px;
-  margin: 0 20px;
+  margin: 0 20px 0 auto;
   border: solid thin black;
   display: flex;
   align-items: center;
   background: ${props => (props.training ? "#00b3b4" : "#f2395a")};
   color: white;
   cursor: pointer;
+  
 
   .toggle-test {
     background: white;

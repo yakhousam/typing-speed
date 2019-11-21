@@ -89,6 +89,7 @@ const UserInput = props => {
 
 const StyledInput = styled.input`
   width: 400px;
+  margin: auto;
   background: transparent;
   text-align: center;
   font-size: 24px;
