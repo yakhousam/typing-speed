@@ -68,6 +68,8 @@ const reducer = (state, action) => {
       return { ...state, score: action.score, accuracy: action.accuracy };
     case actionsTypes.UPDATE_INTERVAL:
       return { ...state, interval: action.interval };
+    case actionsTypes.TOGGLE_TRAINING:
+      return { ...state, training: !state.training}
 
     default:
       return state;
