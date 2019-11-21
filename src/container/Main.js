@@ -31,6 +31,7 @@ const StyledMain = styled.main`
 `;
 const ButtonContainer = styled.div`
   display: flex;
+  justify-content: center;
 `;
 const ButtonGetText = styled(Button)`
   border-bottom-left-radius: 0;
