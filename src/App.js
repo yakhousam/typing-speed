@@ -1,17 +1,16 @@
 import React, { useReducer, useEffect } from "react";
 import { createGlobalStyle } from "styled-components";
+import Main from './container/Main'
 import SideBare from "./component/SideBare";
 import Chart from "./component/Chart";
-import TextBox from "./component/TextBox";
+
 import ToolTip from "./component/ToolTip";
-import InputContainer from "./component/InputContainer";
-import { Grid, Main, ChartsContainer } from "./component/styledComponents";
+import { Grid, ChartsContainer } from "./component/styledComponents";
 
 import {
   decTimer,
   gameOver,
   updateDataChart,
-  getNewTxt,
   updateScore,
   updateInterval
 } from "./actions";
@@ -86,19 +85,7 @@ function App() {
       <GlobalStyle />
       <Grid>
         <SideBare score={score} accuracy={accuracy} timer={timer} />
-        <Main>
-          <button
-            onClick={() => {
-              clearInterval(interval)
-              getNewTxt({ dispatch, state });
-            }}
-          >
-            Get random text
-          </button>
-          <TextBox state={state} dispatch={dispatch} />
-          <InputContainer state={state} dispatch={dispatch} />
-        </Main>
-
+        <Main state={state} dispatch={dispatch} />       
         <ChartsContainer>
           <Chart
             title="WPM"
