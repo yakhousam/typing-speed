@@ -82,10 +82,16 @@ function App() {
   useEffect(() => {
     // save user progress in localstorage
     if (!training && timer < 1 && score > 0 && !isTimerStarted) {
-      const data = saveResultLocalStorage({ score, accuracy });
+      const data = saveResultLocalStorage({ score, accuracy, type: 'test' });
       console.log("data =", data);
       updateDataChart({ data, dispatch });
     }
+    if (training  && score > 0 && !isTimerStarted) {
+      const data = saveResultLocalStorage({ score, accuracy, type: 'training' });
+      console.log("data =", data);
+      updateDataChart({ data, dispatch });
+    }
+
   }, [score, accuracy, timer, isTimerStarted, training]);
 
   useEffect(() => {
@@ -105,6 +111,8 @@ function App() {
     }
   });
 
+  const data = training ? dataChart.filter(d => d.type === 'training') :  dataChart.filter(d => d.type === 'test')
+window.console.log = () => {}
   return (
     <>
       <GlobalStyle />
@@ -114,11 +122,11 @@ function App() {
         <ChartsContainer>
           <Chart
             title="WPM"
-            data={dataChart.map(d => ({ date: d.date, value: d.score }))}
+            data={data.map(d => ({ date: d.date, value: d.score }))}
           />
           <Chart
             title="Accuracy"
-            data={dataChart.map(d => ({ date: d.date, value: d.accuracy }))}
+            data={data.map(d => ({ date: d.date, value: d.accuracy }))}
           />
         </ChartsContainer>
 
