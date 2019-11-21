@@ -19,15 +19,19 @@ const UserInput = props => {
     timer,
     cursor,
     input,
-    errorArr
+    errorArr,
+    training
   } = props.state;
   const handleChange = e => {
     let newErroArr = [...errorArr];
     let newCursor = cursor;
-    if (timer < 1 || cursor > textArr.length - 1) {
+    if ((!training && timer < 1) || (cursor > textArr.length - 1)) {
       return;
     }
-    if (!isTimerStarted && timer > 0) {
+    if (!training && !isTimerStarted && timer > 0) {
+      startTimer({ start: true, dispatch });
+    }
+    if(training && !isTimerStarted){
       startTimer({ start: true, dispatch });
     }
     let input = e.target.value;
@@ -50,6 +54,7 @@ const UserInput = props => {
       incrementCursor({ dispatch });
       input = "";
       newCursor++;
+     
     }
     setInput({ input, dispatch });
     updateDisplayTxt({
@@ -61,6 +66,7 @@ const UserInput = props => {
         cursor: newCursor
       }
     });
+    
   };
   const [isFocus, setIsFocus] = useState(false);
   return (
