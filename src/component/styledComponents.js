@@ -19,11 +19,7 @@ export const Header = styled.header`
   grid-column: 2;
   grid-row: 1;
 `;
-export const Main = styled.main`
-  grid-column: 2;
-  grid-row: 1;
-  padding: 20px;
-`;
+
 
 
 export const StyledTextBox = styled.div`
@@ -99,6 +95,21 @@ export const ScoreContainer = styled.div`
     margin: 0;
     text-align: center;
     color: #6de576;
+  }
+`
+
+export const Button = styled.div`
+  font-size: 24px;
+  padding: .2em .5em;
+  border-radius: 5px;
+  color: #fff;
+  background: #6148ff;
+  border: thin solid #6148ff;
+
+  &:hover{    
+    cursor: pointer;
+   background: transparent;
+    color: #6148ff;
   }
 `
 
