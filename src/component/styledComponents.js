@@ -75,6 +75,7 @@ export const ChartsContainer = styled.section`
   grid-row: 2;
   grid-column: 1 / span 2;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
   background: #6148ff;
