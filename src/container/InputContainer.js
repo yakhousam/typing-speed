@@ -8,29 +8,40 @@ import { Button } from "../component/styledComponents";
 const InputContainer = ({ state, dispatch }) => {
   return (
     <Section>
-      {state.timer > 0 && <UserInput state={state} dispatch={dispatch} />}
-      {state.timer < 1 && (
-        <>
-          <ButtonReload
-            onClick={() => {
-              reload({ dispatch, state });
-            }}
-          >
-            reload
-          </ButtonReload>
-          <ToggleButton training={state.training}
-            onClick={() => {
-              toggleTraining({ dispatch });
-            }}
-          >
-            {!state.training ? (
-              <div className="toggle-test">Test</div>
-            ) : (
-              <div className="toogle-training">Training</div>
-            )}
-          </ToggleButton>
-        </>
+      {!state.training && state.timer > 0 && <UserInput state={state} dispatch={dispatch} />}
+      {state.training && state.cursor <= state.textArr.length -1 && <UserInput state={state} dispatch={dispatch} />}
+
+      {!state.training && state.timer < 1 && (
+        <ButtonReload
+          onClick={() => {
+            reload({ dispatch, state });
+          }}
+        >
+          reload
+        </ButtonReload>
       )}
+       {state.training && !state.interval && state.timer > 0 && (
+        <ButtonReload
+          onClick={() => {
+            reload({ dispatch, state });
+          }}
+        >
+          reload
+        </ButtonReload>
+      )}
+      <ToggleButton
+        training={state.training}
+        onClick={() => {
+          toggleTraining({ dispatch, state });
+        
+        }}
+      >
+        {!state.training ? (
+          <div className="toggle-test">Test</div>
+        ) : (
+          <div className="toogle-training">Training</div>
+        )}
+      </ToggleButton>
     </Section>
   );
 };
@@ -60,20 +71,20 @@ const ToggleButton = styled.div`
   border: solid thin black;
   display: flex;
   align-items: center;
-  background: ${props => props.training  ? '#00b3b4' : '#f2395a'} ;
+  background: ${props => (props.training ? "#00b3b4" : "#f2395a")};
   color: white;
   cursor: pointer;
 
-  .toggle-test{
+  .toggle-test {
     background: white;
     color: #f2395a;
-    padding: .2em .5em;
+    padding: 0.2em 0.5em;
   }
-  .toogle-training{   
-    margin-left: auto;    
+  .toogle-training {
+    margin-left: auto;
     background: white;
     color: #00b3b4;
-    padding: .2em .5em;
+    padding: 0.2em 0.5em;
   }
 `;
 
