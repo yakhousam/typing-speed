@@ -62,7 +62,9 @@ const reducer = (state, action) => {
         ...initState,
         displayText: action.displayText,
         textArr: action.textArr,
-        dataChart: [...state.dataChart]
+        dataChart: [...state.dataChart],
+        training: state.training,
+        timer: state.training ? 0 : initState.timer
       };
     case actionsTypes.UPDATE_CURRENT_WORD_OFFSET:
       return { ...state, currentWordOffsetTop: action.offset };

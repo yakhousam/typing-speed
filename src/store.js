@@ -1,7 +1,7 @@
 import { formatTxt, getDataLocalSorage } from "./utils";
 import { getRandomWordList } from "./wordList";
 
-const wordList = getRandomWordList(6);
+const wordList = getRandomWordList(200);
 
 export const initState = {
   displayText: formatTxt(wordList),
@@ -10,7 +10,7 @@ export const initState = {
   errorArr: [],
   errorArrTxt: [],
   cursor: 0,
-  timer: 6,
+  timer: 60,
   isTimerStarted: false,
   score: 0,
   dataChart: [ ...getDataLocalSorage()],
