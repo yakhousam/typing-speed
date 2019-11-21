@@ -87,7 +87,7 @@ const Chart = ({ data, title }) => {
       })
       .attr("r", 3)
       .append("title")
-      .text(d => d.value);
+      .text(d => `${d.value}${title !=='Accuracy'? ' '+title : '%'} on ${new Date(d.date).toLocaleString()}`);
   }, [data, title]);
 
   return <StyledChart ref={svgRef} />;
