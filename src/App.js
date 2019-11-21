@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import { createGlobalStyle } from "styled-components";
-import Main from './container/Main'
+import Main from "./container/Main";
 import SideBare from "./component/SideBare";
 import Chart from "./component/Chart";
 
@@ -12,7 +12,8 @@ import {
   gameOver,
   updateDataChart,
   updateScore,
-  updateInterval
+  updateInterval,
+  incTimer
 } from "./actions";
 import { saveResultLocalStorage, calcAccuracy } from "./utils";
 import { initState } from "./store";
@@ -38,53 +39,70 @@ function App() {
     accuracy,
     cursor,
     errorArr,
-    interval
+    interval,
+    training
   } = state;
 
-  
   useEffect(() => {
     // decrement timer and call gameOver when timer=0
-    if (timer > 0 && isTimerStarted && !interval) {
+    if (!training && timer > 0 && isTimerStarted && !interval) {
       const timerInterval = setInterval(() => {
         decTimer({ dispatch });
       }, 1000);
-      updateInterval({dispatch, interval: timerInterval});
+      updateInterval({ dispatch, interval: timerInterval });
     }
-    if (timer < 1 && isTimerStarted) {
+    if (!training && timer < 1 && isTimerStarted) {
       clearInterval(interval);
-      updateInterval({dispatch ,interval: undefined});
+      updateInterval({ dispatch, interval: undefined });
       gameOver({ dispatch, state });
     }
-  }, [timer, isTimerStarted, interval, state]);
+  }, [timer, isTimerStarted, interval, state, training]);
 
   useEffect(() => {
     // update score and accuracy
-    if (timer > 0) {
+    if ((!training && timer > 0) || (training && isTimerStarted)) {
       const words = cursor - errorArr.filter(el => el !== cursor).length;
-      const wpm =
-        words > 0 && timer < initState.timer
-          ? (words * initState.timer) / (initState.timer - timer)
+      let wpm
+      if (!training) {
+        wpm =
+          words > 0 && timer < initState.timer
+            ? (words * initState.timer) / (initState.timer - timer)
+            : 0;
+      }else{
+        wpm = words > 0 && timer > 0 
+          ? (words * 60) / (timer)
           : 0;
+      }
+
       const accuracy = calcAccuracy({ score: words, errorArr: errorArr });
       updateScore({ dispatch, accuracy, score: wpm.toFixed(0) });
     }
-  }, [cursor, errorArr, timer]);
+  }, [cursor, errorArr, timer, training, isTimerStarted]);
 
   useEffect(() => {
     // save user progress in localstorage
-    if (timer < 1 && score > 0 && !isTimerStarted ) {
+    if (!training && timer < 1 && score > 0 && !isTimerStarted) {
       const data = saveResultLocalStorage({ score, accuracy });
       console.log("data =", data);
       updateDataChart({ data, dispatch });
     }
-  }, [score, accuracy, timer, isTimerStarted]);
+  }, [score, accuracy, timer, isTimerStarted, training]);
+
+  useEffect(() => {
+    if (training && !interval && isTimerStarted) {
+      const timerInterval = setInterval(() => {
+        incTimer({ dispatch });
+      }, 1000);
+      updateInterval({ dispatch, interval: timerInterval, training });
+    }
+  });
 
   return (
     <>
       <GlobalStyle />
       <Grid>
         <SideBare score={score} accuracy={accuracy} timer={timer} />
-        <Main state={state} dispatch={dispatch} />       
+        <Main state={state} dispatch={dispatch} />
         <ChartsContainer>
           <Chart
             title="WPM"
