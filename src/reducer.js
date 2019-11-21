@@ -44,6 +44,8 @@ const reducer = (state, action) => {
       };
     case actionsTypes.DEC_TIMER:
       return { ...state, timer: state.timer - 1 };
+    case actionsTypes.INC_TIMER:
+      return { ...state, timer: state.timer + 1 };
     case actionsTypes.START_TIMER:
       return { ...state, isTimerStarted: true };
     case actionsTypes.GAME_OVER:
@@ -69,7 +71,7 @@ const reducer = (state, action) => {
     case actionsTypes.UPDATE_INTERVAL:
       return { ...state, interval: action.interval };
     case actionsTypes.TOGGLE_TRAINING:
-      return { ...state, training: !state.training}
+      return { ...state, training: !state.training, timer: !state.training ? 0 : initState.timer}
 
     default:
       return state;
