@@ -13,7 +13,8 @@ import {
   updateDataChart,
   updateScore,
   updateInterval,
-  incTimer
+  incTimer,
+  updateDisplayTxt
 } from "./actions";
 import { saveResultLocalStorage, calcAccuracy } from "./utils";
 import { initState } from "./store";
@@ -40,7 +41,8 @@ function App() {
     cursor,
     errorArr,
     interval,
-    training
+    training,
+    textArr
   } = state;
 
   useEffect(() => {
@@ -62,16 +64,14 @@ function App() {
     // update score and accuracy
     if ((!training && timer > 0) || (training && isTimerStarted)) {
       const words = cursor - errorArr.filter(el => el !== cursor).length;
-      let wpm
+      let wpm;
       if (!training) {
         wpm =
           words > 0 && timer < initState.timer
             ? (words * initState.timer) / (initState.timer - timer)
             : 0;
-      }else{
-        wpm = words > 0 && timer > 0 
-          ? (words * 60) / (timer)
-          : 0;
+      } else {
+        wpm = words > 0 && timer > 0 ? (words * 60) / timer : 0;
       }
 
       const accuracy = calcAccuracy({ score: words, errorArr: errorArr });
@@ -94,6 +94,14 @@ function App() {
         incTimer({ dispatch });
       }, 1000);
       updateInterval({ dispatch, interval: timerInterval, training });
+    }
+  });
+  useEffect(() => {
+    if(training && cursor > textArr.length - 1 && interval){
+      clearInterval(interval);
+      updateInterval({ dispatch, interval: undefined });
+      gameOver({ dispatch, state});
+      updateDisplayTxt({dispatch, state})
     }
   });
 
