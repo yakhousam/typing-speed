@@ -64,7 +64,7 @@ export const gameOver = ({ dispatch, state }) => {
   const errorArr = state.errorArr.filter(el => el !== state.cursor);
   const accuracy = calcAccuracy({ score, errorArr });
   const update = {
-    cursor: 0,
+    // cursor: 0,
     isTimerStarted: false,
     currentWordOffsetTop: 0,
     input: "",
@@ -103,8 +103,9 @@ export const updateScore = ({dispatch, accuracy, score}) => {
 export const updateInterval = ({dispatch, interval}) => {
   dispatch({type: UPDATE_INTERVAL, interval})
 }
-export const toggleTraining = ({dispatch}) => {
-  dispatch({type: TOGGLE_TRAINING})
+export const toggleTraining = ({dispatch, state}) => {
+  const displayText = formatTxt(state.textArr);
+  dispatch({type: TOGGLE_TRAINING, displayText})
 }
 
 

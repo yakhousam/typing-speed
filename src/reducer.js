@@ -40,7 +40,9 @@ const reducer = (state, action) => {
         ...initState,
         displayText: action.displayText,
         textArr: [...state.textArr],
-        dataChart: [...state.dataChart]
+        dataChart: [...state.dataChart],
+        training: state.training,
+        timer: state.training ? 0 : initState.timer
       };
     case actionsTypes.DEC_TIMER:
       return { ...state, timer: state.timer - 1 };
@@ -71,7 +73,14 @@ const reducer = (state, action) => {
     case actionsTypes.UPDATE_INTERVAL:
       return { ...state, interval: action.interval };
     case actionsTypes.TOGGLE_TRAINING:
-      return { ...state, training: !state.training, timer: !state.training ? 0 : initState.timer}
+      return {
+        ...initState,
+        displayText: action.displayText,
+        textArr: [...state.textArr],
+        dataChart: [...state.dataChart],
+        training: !state.training,
+        timer: !state.training ? 0 : initState.timer
+      };
 
     default:
       return state;
