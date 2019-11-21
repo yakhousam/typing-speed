@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/yakhousam/typing-speed/static/js/main.ec3c373d.chunk.js",
-    "main.js.map": "/yakhousam/typing-speed/static/js/main.ec3c373d.chunk.js.map",
-    "runtime-main.js": "/yakhousam/typing-speed/static/js/runtime-main.0a6b1b90.js",
-    "runtime-main.js.map": "/yakhousam/typing-speed/static/js/runtime-main.0a6b1b90.js.map",
-    "static/js/2.1f4eed55.chunk.js": "/yakhousam/typing-speed/static/js/2.1f4eed55.chunk.js",
-    "static/js/2.1f4eed55.chunk.js.map": "/yakhousam/typing-speed/static/js/2.1f4eed55.chunk.js.map",
-    "index.html": "/yakhousam/typing-speed/index.html",
-    "precache-manifest.db87c56b57bcd17e00f2258113e1f62f.js": "/yakhousam/typing-speed/precache-manifest.db87c56b57bcd17e00f2258113e1f62f.js",
-    "service-worker.js": "/yakhousam/typing-speed/service-worker.js"
+    "main.js": "/typing-speed/static/js/main.d0749a17.chunk.js",
+    "main.js.map": "/typing-speed/static/js/main.d0749a17.chunk.js.map",
+    "runtime-main.js": "/typing-speed/static/js/runtime-main.a5073bbc.js",
+    "runtime-main.js.map": "/typing-speed/static/js/runtime-main.a5073bbc.js.map",
+    "static/js/2.68456f39.chunk.js": "/typing-speed/static/js/2.68456f39.chunk.js",
+    "static/js/2.68456f39.chunk.js.map": "/typing-speed/static/js/2.68456f39.chunk.js.map",
+    "index.html": "/typing-speed/index.html",
+    "precache-manifest.fb54da28fbf0a04c8b30551e6152d1ca.js": "/typing-speed/precache-manifest.fb54da28fbf0a04c8b30551e6152d1ca.js",
+    "service-worker.js": "/typing-speed/service-worker.js"
   },
   "entrypoints": [
-    "static/js/runtime-main.0a6b1b90.js",
-    "static/js/2.1f4eed55.chunk.js",
-    "static/js/main.ec3c373d.chunk.js"
+    "static/js/runtime-main.a5073bbc.js",
+    "static/js/2.68456f39.chunk.js",
+    "static/js/main.d0749a17.chunk.js"
   ]
 }
