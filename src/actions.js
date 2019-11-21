@@ -11,6 +11,7 @@ export const REMOVE_ERROR = "REMOVE_ERROR";
 export const RELOAD = "RELOAD";
 export const START_TIMER = "START_TIMER";
 export const DEC_TIMER = "DEC_TIMER";
+export const INC_TIMER = "INC_TIMER";
 export const GAME_OVER = "GAME_OVER";
 export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART";
 export const GET_NEW_TXT = "GET_NEW_TXT";
@@ -53,6 +54,9 @@ export const startTimer = ({ start, dispatch }) => {
 export const decTimer = ({ dispatch }) => {
   dispatch({ type: DEC_TIMER });
 };
+export const incTimer = ({ dispatch }) => {
+  dispatch({ type: INC_TIMER });
+};
 export const gameOver = ({ dispatch, state }) => {
   const x =
     state.cursor - state.errorArr.filter(el => el !== state.cursor).length;
@@ -68,8 +72,8 @@ export const gameOver = ({ dispatch, state }) => {
       ...state.displayText.slice(0, state.cursor),
       ...formatTxt(state.textArr).slice(state.cursor)
     ],
-    timer: 0,
-    score,
+    timer: state.training ? state.timer : 0,
+    score: state.training ? state.score : score,
     errorArr,
     accuracy
   };
