@@ -25,14 +25,14 @@ const UserInput = props => {
   const handleChange = e => {
     let newErroArr = [...errorArr];
     let newCursor = cursor;
-    if ((!training && timer < 1) || (cursor > textArr.length - 1)) {
+    if ((!training && timer < 1) || cursor > textArr.length - 1) {
       return;
     }
     if (!training && !isTimerStarted && timer > 0) {
-      startTimer({ start: true, dispatch });
+      dispatch(startTimer(true));
     }
-    if(training && !isTimerStarted){
-      startTimer({ start: true, dispatch });
+    if (training && !isTimerStarted) {
+      dispatch(startTimer(true));
     }
     let input = e.target.value;
     console.log("input =", input);
@@ -49,14 +49,13 @@ const UserInput = props => {
     }
     if (input.endsWith(" ")) {
       if (newErroArr.includes(cursor)) {
-        addErrorTxt({ dispatch, error: { id: cursor, input } });
+        dispatch(addErrorTxt({ id: cursor, input }));
       }
-      incrementCursor({ dispatch });
+      dispatch(incrementCursor());
       input = "";
       newCursor++;
-     
     }
-    setInput({ input, dispatch });
+    // dispatch(setInput(input));
     updateDisplayTxt({
       dispatch,
       state: {
@@ -66,7 +65,6 @@ const UserInput = props => {
         cursor: newCursor
       }
     });
-    
   };
   const [isFocus, setIsFocus] = useState(false);
   return (
@@ -93,7 +91,7 @@ const StyledInput = styled.input`
   background: transparent;
   text-align: center;
   font-size: 24px;
-  padding: .2em .5em;
+  padding: 0.2em 0.5em;
 
   ${props =>
     props.isFocus

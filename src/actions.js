@@ -1,6 +1,5 @@
 import { formatTxt, calcAccuracy, formatDisplayTxt } from "./utils";
-import {getRandomWordList} from './wordList'
-
+import { getRandomWordList } from "./wordList";
 
 export const SET_INPUT = "SET_INPUT";
 export const UPDATE_DISPLAY_TXT = "UPDATE_DISPLAY_TXT";
@@ -17,27 +16,25 @@ export const UPDATE_DATA_CHART = "UPDATE_DATA_CHART";
 export const GET_NEW_TXT = "GET_NEW_TXT";
 export const UPDATE_CURRENT_WORD_OFFSET = "UPDATE_CURRENT_WORD_OFFSET";
 export const UPDATE_TOOLTIP = "UPDATE_TOOLTIP";
-export const UPDATE_SCORE = "UPDATE_SCORE"
-export const UPDATE_INTERVAL = "UPDATE_INTERVAL"
-export const TOGGLE_TRAINING = "TOGGLE_TRAINING"
+export const UPDATE_SCORE = "UPDATE_SCORE";
+export const UPDATE_INTERVAL = "UPDATE_INTERVAL";
+export const TOGGLE_TRAINING = "TOGGLE_TRAINING";
 
-export const setInput = ({ input, dispatch }) => {
-  dispatch({ type: SET_INPUT, input });
-};
+export const setInput = input => ({ type: SET_INPUT, input });
+
 export const updateDisplayTxt = ({ dispatch, state }) => {
   const displayText = formatDisplayTxt(state);
-  dispatch({ type: UPDATE_DISPLAY_TXT, update :{ errorArr: state.errorArr, displayText }});
+  dispatch({
+    type: UPDATE_DISPLAY_TXT,
+    update: { errorArr: state.errorArr, displayText, input: state.input }
+  });
 };
-export const incrementCursor = ({ dispatch }) => {
-  dispatch({ type: INC_CURSOR });
-};
+export const incrementCursor = () => ({ type: INC_CURSOR });
 
 export const addError = ({ dispatch, error }) => {
   dispatch({ type: ADD_ERROR, error });
 };
-export const addErrorTxt = ({ dispatch, error }) => {
-  dispatch({ type: ADD_ERROR_TXT, error });
-};
+export const addErrorTxt = error  => ({ type: ADD_ERROR_TXT, error })
 
 export const removeError = ({ dispatch, errorArr, error }) => {
   const newErrorArr = errorArr.filter(el => el !== error);
@@ -47,9 +44,7 @@ export const reload = ({ dispatch, state }) => {
   const displayText = formatTxt(state.textArr);
   dispatch({ type: RELOAD, displayText });
 };
-export const startTimer = ({ start, dispatch }) => {
-  dispatch({ type: START_TIMER, start });
-};
+export const startTimer = (start) => ({ type: START_TIMER, start });
 
 export const decTimer = ({ dispatch }) => {
   dispatch({ type: DEC_TIMER });
@@ -84,7 +79,7 @@ export const updateDataChart = ({ data, dispatch }) => {
 };
 
 export const getNewTxt = ({ dispatch }) => {
-  const wordList = getRandomWordList(200);  
+  const wordList = getRandomWordList(200);
   const displayText = formatTxt(wordList);
   const textArr = wordList;
   dispatch({ type: GET_NEW_TXT, displayText, textArr });
@@ -95,17 +90,14 @@ export const updateCurrentWordOffset = ({ dispatch, offset }) => {
 export const updateToolTip = ({ dispatch, toolTip }) => {
   dispatch({ type: UPDATE_TOOLTIP, toolTip });
 };
-export const updateScore = ({dispatch, accuracy, score}) => {
-  dispatch({ type: UPDATE_SCORE, accuracy, score})
-  
-}
+export const updateScore = ({ dispatch, accuracy, score }) => {
+  dispatch({ type: UPDATE_SCORE, accuracy, score });
+};
 
-export const updateInterval = ({dispatch, interval}) => {
-  dispatch({type: UPDATE_INTERVAL, interval})
-}
-export const toggleTraining = ({dispatch, state}) => {
+export const updateInterval = ({ dispatch, interval }) => {
+  dispatch({ type: UPDATE_INTERVAL, interval });
+};
+export const toggleTraining = ({ dispatch, state }) => {
   const displayText = formatTxt(state.textArr);
-  dispatch({type: TOGGLE_TRAINING, displayText})
-}
-
-
+  dispatch({ type: TOGGLE_TRAINING, displayText });
+};
